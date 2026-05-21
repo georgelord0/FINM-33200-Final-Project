@@ -1,0 +1,11 @@
+data:
+  source: yfinance
+  start: "2015-01-01"
+  end: "2023-12-31"
+  top_n: 500
+  cache_dir: ./data_cache
+
+models: [zero, mean, ridge, lightgbm, catboost, chronos-bolt-21, chronos-bolt-252]
+oos_year: 2023
+horizon: 1
+output_dir: ./results/replication_us_2023_tsfm

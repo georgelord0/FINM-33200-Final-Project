@@ -3,6 +3,10 @@ __pycache__/
 .pytest_cache/
 data_cache/
 results/
+src/data/
+cache/
+*.parquet
+*.npz
 .venv/
 .DS_Store
 .env

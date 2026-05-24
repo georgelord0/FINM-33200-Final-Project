@@ -1,0 +1,39 @@
+# 1-second bars from WRDS TAQ (millisecond trades aggregated server-side).
+# Requires WRDS_USERNAME / WRDS_PASSWORD in .env.
+#
+# Bars-per-year: 6.5h * 3600 = 23400 bars/session * 252 sessions = 5_896_800.
+#
+# OOS window kept short (~90 min) because Chronos on CPU is slow per-call
+# and we forecast every bar. Tune up once you've seen the first run finish.
+
+data:
+  source: wrds
+  interval: "1s"
+  start: "2025-02-03"
+  end:   "2025-02-03"
+  # GOOG (not GOOGL): TAQ consolidates Alphabet under root GOOG.
+  # TAQ time_m is ET-naive, so the timestamps below are ET wall-clock.
+  tickers: [AAPL, MSFT, GOOG, AMZN, NVDA, META, JPM, V, JNJ, WMT]
+  cache_dir: ./data_cache
+  covariates:
+    lags: [1, 60, 300]
+    vol_window: 60
+    mom_long: 600       # 10-min momentum
+    mom_short: 60       # less 1 minute
+    log_vol_z_window: 600
+
+models:
+  - zero
+  - mean
+  - ridge
+  - lightgbm
+  - chronos-bolt-60-cpu     # 1 minute of context (CPU; no CUDA on this box)
+  - chronos-bolt-300-cpu    # 5 minutes of context
+
+horizon: 1
+train_end: "2025-02-03 13:59:59"   # ET
+oos_start: "2025-02-03 14:00:00"   # ET — 14:00
+oos_end:   "2025-02-03 14:09:59"   # ET — 14:10  (10 min = 600 1s bars)
+bars_per_year: 5896800
+latency: true
+output_dir: ./results/intraday_1s_wrds

@@ -64,7 +64,7 @@ def long_short_returns(df: pd.DataFrame, n_deciles: int = 10) -> pd.Series:
     return df.groupby("date", group_keys=False).apply(ls, include_groups=False).dropna()
 
 
-def portfolio_stats(ls: pd.Series) -> dict[str, float]:
+def portfolio_stats(ls: pd.Series, bars_per_year: int = TRADING_DAYS) -> dict[str, float]:
     if len(ls) == 0:
         return {k: float("nan") for k in
                 ["ann_return", "ann_vol", "sharpe", "max_dd", "max_dd_1d"]}
@@ -73,16 +73,20 @@ def portfolio_stats(ls: pd.Series) -> dict[str, float]:
     equity = (1 + ls).cumprod()
     drawdown = equity / equity.cummax() - 1
     return {
-        "ann_return": mu * TRADING_DAYS,
-        "ann_vol": sd * np.sqrt(TRADING_DAYS),
-        "sharpe": (mu / sd) * np.sqrt(TRADING_DAYS) if sd > 0 else float("nan"),
+        "ann_return": mu * bars_per_year,
+        "ann_vol": sd * np.sqrt(bars_per_year),
+        "sharpe": (mu / sd) * np.sqrt(bars_per_year) if sd > 0 else float("nan"),
         "max_dd": float(drawdown.min()),
         "max_dd_1d": float(ls.min()),
     }
 
 
-def summarize(df: pd.DataFrame) -> dict[str, float]:
-    """Compute every reported metric on a long forecast frame."""
+def summarize(df: pd.DataFrame, bars_per_year: int = TRADING_DAYS) -> dict[str, float]:
+    """Compute every reported metric on a long forecast frame.
+
+    bars_per_year sets annualization for portfolio stats: 252 (daily, default),
+    98280 = 390*252 (1-minute bars), 5896800 = 23400*252 (1-second bars).
+    """
     ls = long_short_returns(df)
     out = {
         "r2_oos": r2_oos(df),
@@ -93,5 +97,5 @@ def summarize(df: pd.DataFrame) -> dict[str, float]:
         "n_obs": int(len(df)),
         "n_dates": int(df["date"].nunique()),
     }
-    out.update(portfolio_stats(ls))
+    out.update(portfolio_stats(ls, bars_per_year=bars_per_year))
     return out

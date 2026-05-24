@@ -1,0 +1,39 @@
+# 1-minute bars from WRDS TAQ — companion to intraday_1s_wrds.yaml.
+# Wider date window (one full trading week) so the Chronos models have a
+# realistic context to draw from and there are enough OOS bars for a
+# meaningful comparison.
+#
+# Bars-per-year: 6.5h * 60 = 390 bars/session * 252 sessions = 98_280.
+#
+# Run with `OMP_NUM_THREADS=1` on macOS to avoid the PyTorch + LightGBM
+# OpenMP segfault. See the README troubleshooting section.
+
+data:
+  source: wrds
+  interval: "1m"
+  start: "2025-01-27"
+  end:   "2025-01-31"
+  tickers: [AAPL, MSFT, GOOG, AMZN, NVDA, META, JPM, V, JNJ, WMT]
+  cache_dir: ./data_cache
+  covariates:
+    lags: [1, 5, 60]
+    vol_window: 60
+    mom_long: 390       # one session
+    mom_short: 60       # less one hour
+    log_vol_z_window: 390
+
+models:
+  - zero
+  - mean
+  - ridge
+  - lightgbm
+  - chronos-bolt-60-cpu     # 1-hour context
+  - chronos-bolt-252-cpu    # ~4-hour context (paper anchor length)
+
+horizon: 1
+train_end: "2025-01-30 16:00:00"   # ET — end of Thu
+oos_start: "2025-01-31 09:30:00"   # ET — Fri open
+oos_end:   "2025-01-31 16:00:00"   # ET — Fri close (390 OOS bars)
+bars_per_year: 98280
+latency: true
+output_dir: ./results/intraday_1m_wrds

@@ -10,3 +10,4 @@ cache/
 .venv/
 .DS_Store
 .env
+.claude

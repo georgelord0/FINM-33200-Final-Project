@@ -1,0 +1,14 @@
+returns:
+  lags: [1, 5, 21]
+
+momentum:
+  windows: [21, 63, 126, 252]
+
+volatility:
+  windows: [21, 63]
+
+liquidity:
+  windows: [21, 63]
+
+fundamentals:
+  lag_quarters: 2

@@ -1,0 +1,9 @@
+date_range:
+  start: "1990-01-01"
+  end: "2024-12-31"
+
+share_codes: [10, 11]
+exchange_codes: [1, 2, 3]
+
+min_price: 1.0
+min_market_cap: 10000000

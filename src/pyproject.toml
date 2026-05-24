@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tsfm_finance"
+version = "0.1.0"
+description = "Time-series foundation models for finance"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas",
+    "pyarrow",
+    "wrds",
+    "pydantic",
+    "tqdm",
+    "loguru",
+    "python-dotenv",
+    "pyyaml",
+    "numpy",
+    "scikit-learn",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+    "mypy",
+]
+
+[tool.setuptools.packages.find]
+include = ["tsfm_finance*"]

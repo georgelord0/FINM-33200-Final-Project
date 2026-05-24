@@ -1,0 +1,1077 @@
+2026-05-22 13:51:32.410 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 13:51:32.412 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 13:51:32.412 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 13:51:32.412 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 13:51:34.141 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 13:51:34.142 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (133 chars): 
+        SELECT date, rf, mktrf, smb, hml
+        FROM ff.factors_daily
+        WHERE date >= '1990-01-01'
+        ORDER...
+2026-05-22 13:51:34.501 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 9128 rows, 5 columns.
+2026-05-22 13:51:34.501 | INFO     | tsfm_finance.utils.wrds_connection:close:164 | WRDS connection closed.
+2026-05-22 13:52:42.240 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 13:52:42.240 | INFO     | tsfm_finance.pulls.pull_factors:pull:207 | Connecting to WRDS ...
+2026-05-22 13:58:22.997 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 13:58:22.998 | INFO     | tsfm_finance.pulls.pull_riskfree:pull:162 | Pulling Fama-French daily factors from 1990-01-01
+2026-05-22 13:58:22.998 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 13:58:22.998 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 13:58:22.998 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 13:58:24.631 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 13:58:24.632 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (133 chars): 
+        SELECT date, rf, mktrf, smb, hml
+        FROM ff.factors_daily
+        WHERE date >= '1990-01-01'
+        ORDER...
+2026-05-22 13:58:24.963 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 9128 rows, 5 columns.
+2026-05-22 13:58:24.963 | INFO     | tsfm_finance.utils.wrds_connection:close:164 | WRDS connection closed.
+2026-05-22 13:58:24.964 | DEBUG    | tsfm_finance.pulls.pull_riskfree:_normalize:99 | Normalizing 9,128 factor rows
+2026-05-22 13:58:24.967 | INFO     | tsfm_finance.pulls.pull_riskfree:_normalize:109 |   Factor summary: rf mean=0.000106, mktrf mean=0.000361
+2026-05-22 13:58:24.968 | DEBUG    | tsfm_finance.pulls.pull_riskfree:_normalize:124 |   Final normalised row count: 9,128
+2026-05-22 13:58:24.978 | INFO     | tsfm_finance.pulls.pull_riskfree:_validate_schema:66 | Schema validation passed on 500-row sample
+2026-05-22 13:58:24.983 | SUCCESS  | tsfm_finance.pulls.pull_riskfree:pull:176 | FF factors saved: 9,128 rows (1990-01-02 → 2026-03-31) → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/riskfree/ff_factors_daily.parquet
+2026-05-22 13:58:25.610 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 13:58:25.611 | INFO     | tsfm_finance.pulls.pull_factors:pull:208 | Connecting to WRDS ...
+2026-05-22 13:58:25.611 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 13:58:25.611 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 13:58:25.611 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 13:58:27.186 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 13:58:27.190 | INFO     | tsfm_finance.pulls.pull_factors:_pull_ff3:80 | Pulling ff.factors_daily (3-factor) ...
+2026-05-22 13:58:27.458 | INFO     | tsfm_finance.pulls.pull_factors:_pull_ff3:88 |   -> 8817 rows
+2026-05-22 13:58:27.459 | INFO     | tsfm_finance.pulls.pull_factors:_pull_momentum:94 | Pulling ff.factors_daily_mom (momentum) ...
+2026-05-22 13:58:27.503 | WARNING  | tsfm_finance.pulls.pull_factors:_pull_momentum:115 | ff.factors_daily_mom not available; trying ff.factors_daily for umd
+2026-05-22 13:58:27.587 | INFO     | tsfm_finance.pulls.pull_factors:_pull_momentum:119 |   -> 8817 rows (umd from ff.factors_daily)
+2026-05-22 13:58:27.588 | INFO     | tsfm_finance.pulls.pull_factors:_pull_ff5:129 | Attempting ff.factors5_daily (5-factor) ...
+2026-05-22 13:58:27.629 | WARNING  | tsfm_finance.pulls.pull_factors:_pull_ff5:142 | ff.factors5_daily not available ((psycopg2.errors.UndefinedTable) relation "ff.factors5_daily" does not exist
+LINE 3:             FROM ff.factors5_daily
+                         ^
+
+[SQL: 
+            SELECT date, smb, hml, rmw, cma, mktrf, rf
+            FROM ff.factors5_daily
+            WHERE date BETWEEN '1990-01-01' AND '2024-12-31'
+            ORDER BY date
+        ]
+(Background on this error at: https://sqlalche.me/e/20/f405)); skipping RMW/CMA
+2026-05-22 13:58:27.630 | INFO     | tsfm_finance.pulls.pull_factors:pull:222 | WRDS queries complete.
+2026-05-22 13:58:27.630 | INFO     | tsfm_finance.pulls.pull_factors:pull:225 | Merging factor datasets ...
+2026-05-22 13:58:27.637 | INFO     | tsfm_finance.pulls.pull_factors:pull:238 | Validating schema on sample rows ...
+2026-05-22 13:58:27.644 | INFO     | tsfm_finance.pulls.pull_factors:pull:246 | Wrote 8817 rows to /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/factors/factors_daily.parquet
+2026-05-22 13:58:28.266 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 13:58:28.267 | INFO     | tsfm_finance.pulls.pull_macro:pull:224 | Connecting to WRDS ...
+2026-05-22 13:58:28.267 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 13:58:28.267 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 13:58:28.267 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 13:58:29.770 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 13:58:29.771 | INFO     | tsfm_finance.pulls.pull_macro:_try_pull_fred:111 | Trying wrdsapps.fred_data ...
+2026-05-22 13:58:29.823 | DEBUG    | tsfm_finance.pulls.pull_macro:_try_pull_fred:124 |   wrdsapps.fred_data failed: (psycopg2.errors.UndefinedTable) relation "wrdsapps.fred_data" does not exist
+LINE 3:                 FROM wrdsapps.fred_data
+                             ^
+
+[SQL: 
+                SELECT date, series_id, value
+                FROM wrdsapps.fred_data
+                WHERE series_id IN ('FEDFUNDS', 'GS10', 'TB3MS', 'CPIAUCSL', 'UNRATE', 'INDPRO', 'VIXCLS')
+                  AND date BETWEEN '1990-01-01' AND '2024-12-31'
+                ORDER BY date
+            ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-22 13:58:29.823 | INFO     | tsfm_finance.pulls.pull_macro:_try_pull_fred:111 | Trying wrdsapps.fredmd ...
+2026-05-22 13:58:29.867 | DEBUG    | tsfm_finance.pulls.pull_macro:_try_pull_fred:124 |   wrdsapps.fredmd failed: (psycopg2.errors.UndefinedTable) relation "wrdsapps.fredmd" does not exist
+LINE 3:                 FROM wrdsapps.fredmd
+                             ^
+
+[SQL: 
+                SELECT date, series_id, value
+                FROM wrdsapps.fredmd
+                WHERE series_id IN ('FEDFUNDS', 'GS10', 'TB3MS', 'CPIAUCSL', 'UNRATE', 'INDPRO', 'VIXCLS')
+                  AND date BETWEEN '1990-01-01' AND '2024-12-31'
+                ORDER BY date
+            ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-22 13:58:29.868 | INFO     | tsfm_finance.pulls.pull_macro:_try_pull_fred:111 | Trying wrdsapps.fred_series ...
+2026-05-22 13:58:29.910 | DEBUG    | tsfm_finance.pulls.pull_macro:_try_pull_fred:124 |   wrdsapps.fred_series failed: (psycopg2.errors.UndefinedTable) relation "wrdsapps.fred_series" does not exist
+LINE 3:                 FROM wrdsapps.fred_series
+                             ^
+
+[SQL: 
+                SELECT date, series_id, value
+                FROM wrdsapps.fred_series
+                WHERE series_id IN ('FEDFUNDS', 'GS10', 'TB3MS', 'CPIAUCSL', 'UNRATE', 'INDPRO', 'VIXCLS')
+                  AND date BETWEEN '1990-01-01' AND '2024-12-31'
+                ORDER BY date
+            ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-22 13:58:29.912 | INFO     | tsfm_finance.pulls.pull_macro:pull:229 | WRDS queries complete.
+2026-05-22 13:58:29.912 | WARNING  | tsfm_finance.pulls.pull_macro:pull:232 | WRDS FRED mirror is not available or returned no data. Writing empty placeholder parquet with correct schema.
+2026-05-22 13:58:29.926 | INFO     | tsfm_finance.pulls.pull_macro:pull:250 | Wrote 0 rows to /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/macro/macro_daily.parquet
+2026-05-22 13:59:32.765 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 13:59:32.765 | INFO     | tsfm_finance.pulls.pull_macro:pull:248 | Connecting to WRDS ...
+2026-05-22 13:59:32.765 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 13:59:32.765 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 13:59:32.765 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 13:59:34.364 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 13:59:34.366 | INFO     | tsfm_finance.pulls.pull_macro:_try_pull_fred:111 | Trying wrdsapps.fred_data ...
+2026-05-22 13:59:34.419 | DEBUG    | tsfm_finance.pulls.pull_macro:_try_pull_fred:124 |   wrdsapps.fred_data failed: (psycopg2.errors.UndefinedTable) relation "wrdsapps.fred_data" does not exist
+LINE 3:                 FROM wrdsapps.fred_data
+                             ^
+
+[SQL: 
+                SELECT date, series_id, value
+                FROM wrdsapps.fred_data
+                WHERE series_id IN ('FEDFUNDS', 'GS10', 'TB3MS', 'CPIAUCSL', 'UNRATE', 'INDPRO', 'VIXCLS')
+                  AND date BETWEEN '1990-01-01' AND '2024-12-31'
+                ORDER BY date
+            ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-22 13:59:34.419 | INFO     | tsfm_finance.pulls.pull_macro:_try_pull_fred:111 | Trying wrdsapps.fredmd ...
+2026-05-22 13:59:34.460 | DEBUG    | tsfm_finance.pulls.pull_macro:_try_pull_fred:124 |   wrdsapps.fredmd failed: (psycopg2.errors.UndefinedTable) relation "wrdsapps.fredmd" does not exist
+LINE 3:                 FROM wrdsapps.fredmd
+                             ^
+
+[SQL: 
+                SELECT date, series_id, value
+                FROM wrdsapps.fredmd
+                WHERE series_id IN ('FEDFUNDS', 'GS10', 'TB3MS', 'CPIAUCSL', 'UNRATE', 'INDPRO', 'VIXCLS')
+                  AND date BETWEEN '1990-01-01' AND '2024-12-31'
+                ORDER BY date
+            ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-22 13:59:34.460 | INFO     | tsfm_finance.pulls.pull_macro:_try_pull_fred:111 | Trying wrdsapps.fred_series ...
+2026-05-22 13:59:34.500 | DEBUG    | tsfm_finance.pulls.pull_macro:_try_pull_fred:124 |   wrdsapps.fred_series failed: (psycopg2.errors.UndefinedTable) relation "wrdsapps.fred_series" does not exist
+LINE 3:                 FROM wrdsapps.fred_series
+                             ^
+
+[SQL: 
+                SELECT date, series_id, value
+                FROM wrdsapps.fred_series
+                WHERE series_id IN ('FEDFUNDS', 'GS10', 'TB3MS', 'CPIAUCSL', 'UNRATE', 'INDPRO', 'VIXCLS')
+                  AND date BETWEEN '1990-01-01' AND '2024-12-31'
+                ORDER BY date
+            ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-22 13:59:34.501 | INFO     | tsfm_finance.pulls.pull_macro:pull:253 | WRDS queries complete.
+2026-05-22 13:59:34.501 | WARNING  | tsfm_finance.pulls.pull_macro:pull:256 | WRDS FRED mirror not available; trying FRED API fallback ...
+2026-05-22 13:59:34.660 | INFO     | tsfm_finance.pulls.pull_macro:_try_pull_fred_api:135 | Falling back to pandas_datareader FRED API ...
+2026-05-22 13:59:36.684 | INFO     | tsfm_finance.pulls.pull_macro:_try_pull_fred_api:147 |   -> 11651 total rows from FRED API
+2026-05-22 13:59:36.698 | INFO     | tsfm_finance.pulls.pull_macro:pull:270 | Validating schema on sample rows ...
+2026-05-22 13:59:36.706 | INFO     | tsfm_finance.pulls.pull_macro:pull:278 | Wrote 9251 rows to /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/macro/macro_daily.parquet
+2026-05-22 13:59:46.877 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 13:59:46.878 | INFO     | tsfm_finance.pulls.pull_linking:pull:261 | Pulling CCM linking table from WRDS
+2026-05-22 13:59:46.878 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 13:59:46.878 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 13:59:46.878 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 13:59:48.496 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 13:59:48.497 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (182 chars): 
+    SELECT
+        gvkey,
+        lpermno AS permno,
+        linkdt,
+        linkenddt,
+        linktype,
+        linkp...
+2026-05-22 13:59:49.331 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 92711 rows, 6 columns.
+2026-05-22 13:59:49.331 | INFO     | tsfm_finance.utils.wrds_connection:close:164 | WRDS connection closed.
+2026-05-22 13:59:49.331 | DEBUG    | tsfm_finance.pulls.pull_linking:_normalize:119 | Normalizing 92,711 linking rows
+2026-05-22 13:59:49.346 | DEBUG    | tsfm_finance.pulls.pull_linking:_normalize:127 |   After linktype filter: 41,036
+2026-05-22 13:59:49.349 | DEBUG    | tsfm_finance.pulls.pull_linking:_normalize:131 |   After linkprim filter: 40,482
+2026-05-22 13:59:49.349 | INFO     | tsfm_finance.pulls.pull_linking:_normalize:137 |   Filled 11,305 missing linkenddt with 2099-12-31
+2026-05-22 13:59:49.374 | DEBUG    | tsfm_finance.pulls.pull_linking:_normalize:153 |   Final normalised row count: 40,482
+2026-05-22 13:59:49.382 | INFO     | tsfm_finance.pulls.pull_linking:_validate_schema:82 | Schema validation passed on 500-row sample
+2026-05-22 13:59:49.397 | SUCCESS  | tsfm_finance.pulls.pull_linking:pull:274 | Linking table saved: 40,482 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/linking/ccm_link.parquet
+2026-05-22 14:00:05.848 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 14:00:05.848 | INFO     | tsfm_finance.pulls.pull_crsp:pull:239 | Pulling CRSP data for 2020–2021
+2026-05-22 14:00:05.848 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 14:00:05.848 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 14:00:05.849 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2020: querying WRDS …
+2026-05-22 14:00:05.849 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 14:00:07.543 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 14:00:07.543 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:00:33.407 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1948995 rows, 12 columns.
+2026-05-22 14:00:33.407 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,948,995 rows
+2026-05-22 14:00:33.508 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 912,525
+2026-05-22 14:00:33.538 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 912,472
+2026-05-22 14:00:33.539 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 23 impossible returns to NaN
+2026-05-22 14:00:33.604 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 912,472
+2026-05-22 14:00:33.620 | INFO     | tsfm_finance.pulls.pull_crsp:_validate_schema:113 | Schema validation passed on 500-row sample
+2026-05-22 14:00:33.772 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2020: saved 912,472 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2020/part-0.parquet
+2026-05-22 14:00:33.772 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2021: querying WRDS …
+2026-05-22 14:00:33.828 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:01:14.607 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 2187548 rows, 12 columns.
+2026-05-22 14:01:14.612 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 2,187,548 rows
+2026-05-22 14:01:14.735 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,027,802
+2026-05-22 14:01:14.770 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,027,796
+2026-05-22 14:01:14.772 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 11 impossible returns to NaN
+2026-05-22 14:01:14.848 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,027,796
+2026-05-22 14:01:15.013 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2021: saved 1,027,796 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2021/part-0.parquet
+2026-05-22 14:01:15.014 | INFO     | tsfm_finance.utils.wrds_connection:close:164 | WRDS connection closed.
+2026-05-22 14:01:15.141 | SUCCESS  | tsfm_finance.pulls.pull_crsp:pull:283 | CRSP pull complete: 1,940,268 total rows
+2026-05-22 14:01:23.705 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 14:01:23.705 | INFO     | tsfm_finance.pulls.pull_compustat:pull:260 | Pulling Compustat data for 2020–2021
+2026-05-22 14:01:23.706 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 14:01:23.706 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 14:01:23.707 | INFO     | tsfm_finance.pulls.pull_compustat:pull:273 |   2020: querying WRDS …
+2026-05-22 14:01:23.707 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 14:01:25.325 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 14:01:25.326 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (395 chars): 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dl...
+2026-05-22 14:01:25.371 | WARNING  | tsfm_finance.utils.wrds_connection:wrapper:76 | query() attempt 1/3 failed ((psycopg2.errors.UndefinedColumn) column "fqtr" does not exist
+LINE 2:         SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sa...
+                                               ^
+
+[SQL: 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che, act, lct, ppent, invt, rect
+        FROM comp.funda
+        WHERE indfmt  = 'INDL'
+          AND datafmt = 'STD'
+          AND popsrc  = 'D'
+          AND consol  = 'C'
+          AND datadate BETWEEN '2020-01-01' AND '2020-12-31'
+        ORDER BY gvkey, datadate
+    ]
+(Background on this error at: https://sqlalche.me/e/20/f405)). Retrying in 1.0s ...
+2026-05-22 14:01:26.415 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (395 chars): 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dl...
+2026-05-22 14:01:26.456 | WARNING  | tsfm_finance.utils.wrds_connection:wrapper:76 | query() attempt 2/3 failed ((psycopg2.errors.UndefinedColumn) column "fqtr" does not exist
+LINE 2:         SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sa...
+                                               ^
+
+[SQL: 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che, act, lct, ppent, invt, rect
+        FROM comp.funda
+        WHERE indfmt  = 'INDL'
+          AND datafmt = 'STD'
+          AND popsrc  = 'D'
+          AND consol  = 'C'
+          AND datadate BETWEEN '2020-01-01' AND '2020-12-31'
+        ORDER BY gvkey, datadate
+    ]
+(Background on this error at: https://sqlalche.me/e/20/f405)). Retrying in 2.0s ...
+2026-05-22 14:01:28.501 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (395 chars): 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dl...
+2026-05-22 14:01:28.537 | ERROR    | tsfm_finance.utils.wrds_connection:wrapper:69 | query() failed after 3 attempts: (psycopg2.errors.UndefinedColumn) column "fqtr" does not exist
+LINE 2:         SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sa...
+                                               ^
+
+[SQL: 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che, act, lct, ppent, invt, rect
+        FROM comp.funda
+        WHERE indfmt  = 'INDL'
+          AND datafmt = 'STD'
+          AND popsrc  = 'D'
+          AND consol  = 'C'
+          AND datadate BETWEEN '2020-01-01' AND '2020-12-31'
+        ORDER BY gvkey, datadate
+    ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-22 14:01:29.210 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 14:01:29.211 | INFO     | tsfm_finance.pulls.pull_ibes:pull:294 | Connecting to WRDS ...
+2026-05-22 14:01:29.211 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 14:01:29.211 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 14:01:29.211 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 14:01:30.794 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 14:01:30.795 | INFO     | tsfm_finance.pulls.pull_ibes:_pull_estimates:140 | Pulling ibes.statsum_epsus ...
+2026-05-22 14:01:33.406 | INFO     | tsfm_finance.pulls.pull_ibes:_pull_estimates:151 |   -> 114281 rows
+2026-05-22 14:01:33.406 | INFO     | tsfm_finance.pulls.pull_ibes:_pull_recommendations:164 | Pulling ibes.recddet ...
+2026-05-22 14:01:36.335 | INFO     | tsfm_finance.pulls.pull_ibes:_pull_recommendations:173 |   -> 176721 rows
+2026-05-22 14:01:36.335 | INFO     | tsfm_finance.pulls.pull_ibes:pull:316 | WRDS queries complete.
+2026-05-22 14:01:36.364 | INFO     | tsfm_finance.pulls.pull_ibes:pull:323 | Validating estimate schema on sample rows ...
+2026-05-22 14:01:36.389 | INFO     | tsfm_finance.pulls.pull_ibes:pull:335 | Wrote 114055 estimate rows to /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/ibes/ibes_estimates.parquet
+2026-05-22 14:01:36.454 | INFO     | tsfm_finance.pulls.pull_ibes:pull:342 | Validating recommendation schema on sample rows ...
+2026-05-22 14:01:36.469 | INFO     | tsfm_finance.pulls.pull_ibes:pull:356 | Wrote 165082 recommendation rows to /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/ibes/ibes_recommendations.parquet
+2026-05-22 14:01:43.000 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 14:01:43.001 | INFO     | tsfm_finance.pulls.pull_compustat:pull:260 | Pulling Compustat data for 2020–2021
+2026-05-22 14:01:43.001 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 14:01:43.001 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 14:01:43.002 | INFO     | tsfm_finance.pulls.pull_compustat:pull:273 |   2020: querying WRDS …
+2026-05-22 14:01:43.002 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 14:01:44.618 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 14:01:44.619 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (395 chars): 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dl...
+2026-05-22 14:01:44.674 | WARNING  | tsfm_finance.utils.wrds_connection:wrapper:76 | query() attempt 1/3 failed ((psycopg2.errors.UndefinedColumn) column "fqtr" does not exist
+LINE 2:         SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sa...
+                                               ^
+
+[SQL: 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che, act, lct, ppent, invt, rect
+        FROM comp.funda
+        WHERE indfmt  = 'INDL'
+          AND datafmt = 'STD'
+          AND popsrc  = 'D'
+          AND consol  = 'C'
+          AND datadate BETWEEN '2020-01-01' AND '2020-12-31'
+        ORDER BY gvkey, datadate
+    ]
+(Background on this error at: https://sqlalche.me/e/20/f405)). Retrying in 1.0s ...
+2026-05-22 14:01:45.731 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (395 chars): 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dl...
+2026-05-22 14:01:45.773 | WARNING  | tsfm_finance.utils.wrds_connection:wrapper:76 | query() attempt 2/3 failed ((psycopg2.errors.UndefinedColumn) column "fqtr" does not exist
+LINE 2:         SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sa...
+                                               ^
+
+[SQL: 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che, act, lct, ppent, invt, rect
+        FROM comp.funda
+        WHERE indfmt  = 'INDL'
+          AND datafmt = 'STD'
+          AND popsrc  = 'D'
+          AND consol  = 'C'
+          AND datadate BETWEEN '2020-01-01' AND '2020-12-31'
+        ORDER BY gvkey, datadate
+    ]
+(Background on this error at: https://sqlalche.me/e/20/f405)). Retrying in 2.0s ...
+2026-05-22 14:01:47.826 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (395 chars): 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dl...
+2026-05-22 14:01:47.868 | ERROR    | tsfm_finance.utils.wrds_connection:wrapper:69 | query() failed after 3 attempts: (psycopg2.errors.UndefinedColumn) column "fqtr" does not exist
+LINE 2:         SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sa...
+                                               ^
+
+[SQL: 
+        SELECT gvkey, datadate, fyear, fqtr, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che, act, lct, ppent, invt, rect
+        FROM comp.funda
+        WHERE indfmt  = 'INDL'
+          AND datafmt = 'STD'
+          AND popsrc  = 'D'
+          AND consol  = 'C'
+          AND datadate BETWEEN '2020-01-01' AND '2020-12-31'
+        ORDER BY gvkey, datadate
+    ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-22 14:02:41.119 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 14:02:41.119 | INFO     | tsfm_finance.pulls.pull_compustat:pull:258 | Pulling Compustat data for 2020–2021
+2026-05-22 14:02:41.120 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 14:02:41.120 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 14:02:41.120 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2020: querying WRDS …
+2026-05-22 14:02:41.120 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 14:02:42.783 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 14:02:42.783 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:02:43.376 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11998 rows, 23 columns.
+2026-05-22 14:02:43.377 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,998 Compustat rows
+2026-05-22 14:02:43.384 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,130
+2026-05-22 14:02:43.385 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 19 rows
+2026-05-22 14:02:43.387 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,130
+2026-05-22 14:02:43.396 | INFO     | tsfm_finance.pulls.pull_compustat:_validate_schema:142 | Schema validation passed on 500-row sample
+2026-05-22 14:02:43.408 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2020: saved 8,130 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2020/part-0.parquet
+2026-05-22 14:02:43.408 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2021: querying WRDS …
+2026-05-22 14:02:43.457 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:02:43.740 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 12291 rows, 23 columns.
+2026-05-22 14:02:43.741 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 12,291 Compustat rows
+2026-05-22 14:02:43.748 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,152
+2026-05-22 14:02:43.749 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 19 rows
+2026-05-22 14:02:43.751 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,152
+2026-05-22 14:02:43.761 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2021: saved 8,152 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2021/part-0.parquet
+2026-05-22 14:02:43.761 | INFO     | tsfm_finance.utils.wrds_connection:close:164 | WRDS connection closed.
+2026-05-22 14:02:43.765 | SUCCESS  | tsfm_finance.pulls.pull_compustat:pull:302 | Compustat pull complete: 16,282 total rows
+2026-05-22 14:02:48.677 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 14:02:48.678 | INFO     | tsfm_finance.pulls.pull_options:pull:225 | Connecting to WRDS ...
+2026-05-22 14:02:48.678 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 14:02:48.678 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 14:02:48.678 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 14:02:50.383 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 14:02:50.384 | INFO     | tsfm_finance.pulls.pull_options:pull:241 | Pulling year 2020 ...
+2026-05-22 14:02:50.434 | WARNING  | tsfm_finance.pulls.pull_options:pull:261 | Failed to pull OptionMetrics for year 2020 ((psycopg2.errors.UndefinedTable) relation "optionm.opprcd" does not exist
+LINE 3:         FROM optionm.opprcd
+                     ^
+
+[SQL: 
+        SELECT secid, date, impl_volatility, delta, gamma, cp_flag
+        FROM optionm.opprcd
+        WHERE date BETWEEN '2020-01-01' AND '2020-12-31'
+    ]
+(Background on this error at: https://sqlalche.me/e/20/f405)). This may indicate missing access permissions.
+2026-05-22 14:02:50.440 | INFO     | tsfm_finance.pulls.pull_options:pull:270 |   Wrote empty placeholder: /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/options/options_2020.parquet
+2026-05-22 14:02:50.440 | INFO     | tsfm_finance.pulls.pull_options:pull:273 | WRDS queries complete.
+2026-05-22 14:02:50.440 | WARNING  | tsfm_finance.pulls.pull_options:pull:278 | No OptionMetrics data was pulled. All partitions are empty.
+2026-05-22 14:02:50.442 | INFO     | tsfm_finance.pulls.pull_options:pull:288 | Total option rows across all years: 0
+2026-05-22 14:02:57.405 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 14:02:57.406 | INFO     | tsfm_finance.pulls.pull_crsp:pull:239 | Pulling CRSP data for 1990–2026
+2026-05-22 14:02:57.406 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 14:02:57.406 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 14:02:57.406 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   1990: querying WRDS …
+2026-05-22 14:02:57.406 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 14:02:58.961 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 14:02:58.961 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:03:31.556 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1740913 rows, 12 columns.
+2026-05-22 14:03:31.556 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,740,913 rows
+2026-05-22 14:03:31.687 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,469,234
+2026-05-22 14:03:31.725 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,467,422
+2026-05-22 14:03:31.727 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 4 impossible returns to NaN
+2026-05-22 14:03:31.823 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,467,422
+2026-05-22 14:03:31.844 | INFO     | tsfm_finance.pulls.pull_crsp:_validate_schema:113 | Schema validation passed on 500-row sample
+2026-05-22 14:03:32.063 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   1990: saved 1,467,422 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=1990/part-0.parquet
+2026-05-22 14:03:32.064 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   1991: querying WRDS …
+2026-05-22 14:03:32.116 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:04:18.257 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1721774 rows, 12 columns.
+2026-05-22 14:04:18.261 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,721,774 rows
+2026-05-22 14:04:18.376 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,444,542
+2026-05-22 14:04:18.408 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,441,510
+2026-05-22 14:04:18.409 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 6 impossible returns to NaN
+2026-05-22 14:04:18.495 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,441,510
+2026-05-22 14:04:18.711 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   1991: saved 1,441,510 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=1991/part-0.parquet
+2026-05-22 14:04:18.711 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   1992: querying WRDS …
+2026-05-22 14:04:18.760 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:04:57.603 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1773305 rows, 12 columns.
+2026-05-22 14:04:57.606 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,773,305 rows
+2026-05-22 14:04:57.715 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,483,134
+2026-05-22 14:04:57.752 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,479,312
+2026-05-22 14:04:57.753 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 5 impossible returns to NaN
+2026-05-22 14:04:57.853 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,479,312
+2026-05-22 14:04:58.072 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   1992: saved 1,479,312 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=1992/part-0.parquet
+2026-05-22 14:04:58.073 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   1993: querying WRDS …
+2026-05-22 14:04:58.124 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:05:35.532 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1874479 rows, 12 columns.
+2026-05-22 14:05:35.535 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,874,479 rows
+2026-05-22 14:05:35.652 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,544,907
+2026-05-22 14:05:35.689 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,540,746
+2026-05-22 14:05:35.691 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 3 impossible returns to NaN
+2026-05-22 14:05:35.790 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,540,746
+2026-05-22 14:05:36.027 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   1993: saved 1,540,746 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=1993/part-0.parquet
+2026-05-22 14:05:36.027 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   1994: querying WRDS …
+2026-05-22 14:05:36.073 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:06:09.964 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 2055083 rows, 12 columns.
+2026-05-22 14:06:09.972 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 2,055,083 rows
+2026-05-22 14:06:10.103 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,671,053
+2026-05-22 14:06:10.147 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,667,853
+2026-05-22 14:06:10.150 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 5 impossible returns to NaN
+2026-05-22 14:06:10.275 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,667,853
+2026-05-22 14:06:10.532 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   1994: saved 1,667,853 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=1994/part-0.parquet
+2026-05-22 14:06:10.533 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   1995: querying WRDS …
+2026-05-22 14:06:10.581 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:06:50.118 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 2113712 rows, 12 columns.
+2026-05-22 14:06:50.128 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 2,113,712 rows
+2026-05-22 14:06:50.279 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,712,869
+2026-05-22 14:06:50.320 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,711,465
+2026-05-22 14:06:50.322 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 5 impossible returns to NaN
+2026-05-22 14:06:50.453 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,711,465
+2026-05-22 14:06:50.477 | INFO     | tsfm_finance.pulls.pull_crsp:_validate_schema:113 | Schema validation passed on 500-row sample
+2026-05-22 14:06:50.737 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   1995: saved 1,711,465 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=1995/part-0.parquet
+2026-05-22 14:06:50.737 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   1996: querying WRDS …
+2026-05-22 14:06:50.785 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:07:35.068 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 2246600 rows, 12 columns.
+2026-05-22 14:07:35.077 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 2,246,600 rows
+2026-05-22 14:07:35.236 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,826,589
+2026-05-22 14:07:35.283 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,825,510
+2026-05-22 14:07:35.285 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 5 impossible returns to NaN
+2026-05-22 14:07:35.420 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,825,510
+2026-05-22 14:07:35.693 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   1996: saved 1,825,510 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=1996/part-0.parquet
+2026-05-22 14:07:35.693 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   1997: querying WRDS …
+2026-05-22 14:07:35.747 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:08:09.001 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 2322247 rows, 12 columns.
+2026-05-22 14:08:09.008 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 2,322,247 rows
+2026-05-22 14:08:09.166 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,883,290
+2026-05-22 14:08:09.213 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,882,420
+2026-05-22 14:08:09.215 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 4 impossible returns to NaN
+2026-05-22 14:08:09.361 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,882,420
+2026-05-22 14:08:09.655 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   1997: saved 1,882,420 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=1997/part-0.parquet
+2026-05-22 14:08:09.655 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   1998: querying WRDS …
+2026-05-22 14:08:09.700 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:08:57.588 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 2289280 rows, 12 columns.
+2026-05-22 14:08:57.600 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 2,289,280 rows
+2026-05-22 14:08:57.751 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,831,857
+2026-05-22 14:08:57.793 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,831,620
+2026-05-22 14:08:57.795 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 17 impossible returns to NaN
+2026-05-22 14:08:57.940 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,831,620
+2026-05-22 14:08:58.236 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   1998: saved 1,831,620 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=1998/part-0.parquet
+2026-05-22 14:08:58.236 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   1999: querying WRDS …
+2026-05-22 14:08:58.303 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:09:43.843 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 2177900 rows, 12 columns.
+2026-05-22 14:09:43.847 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 2,177,900 rows
+2026-05-22 14:09:43.982 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,708,555
+2026-05-22 14:09:44.032 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,708,510
+2026-05-22 14:09:44.036 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 15 impossible returns to NaN
+2026-05-22 14:09:44.162 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,708,510
+2026-05-22 14:09:44.433 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   1999: saved 1,708,510 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=1999/part-0.parquet
+2026-05-22 14:09:44.433 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2000: querying WRDS …
+2026-05-22 14:09:44.494 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:10:28.949 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 2134351 rows, 12 columns.
+2026-05-22 14:10:28.953 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 2,134,351 rows
+2026-05-22 14:10:29.077 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,653,236
+2026-05-22 14:10:29.116 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,653,034
+2026-05-22 14:10:29.119 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 4 impossible returns to NaN
+2026-05-22 14:10:29.237 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,653,034
+2026-05-22 14:10:29.260 | INFO     | tsfm_finance.pulls.pull_crsp:_validate_schema:113 | Schema validation passed on 500-row sample
+2026-05-22 14:10:29.536 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2000: saved 1,653,034 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2000/part-0.parquet
+2026-05-22 14:10:29.536 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2001: querying WRDS …
+2026-05-22 14:10:29.585 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:11:01.012 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1965766 rows, 12 columns.
+2026-05-22 14:11:01.016 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,965,766 rows
+2026-05-22 14:11:01.134 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,481,517
+2026-05-22 14:11:01.170 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,481,456
+2026-05-22 14:11:01.172 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 2 impossible returns to NaN
+2026-05-22 14:11:01.271 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,481,456
+2026-05-22 14:11:01.525 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2001: saved 1,481,456 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2001/part-0.parquet
+2026-05-22 14:11:01.525 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2002: querying WRDS …
+2026-05-22 14:11:01.581 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:11:34.938 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1864070 rows, 12 columns.
+2026-05-22 14:11:34.943 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,864,070 rows
+2026-05-22 14:11:35.068 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,365,935
+2026-05-22 14:11:35.105 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,365,862
+2026-05-22 14:11:35.107 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 8 impossible returns to NaN
+2026-05-22 14:11:35.191 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,365,862
+2026-05-22 14:11:35.434 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2002: saved 1,365,862 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2002/part-0.parquet
+2026-05-22 14:11:35.434 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2003: querying WRDS …
+2026-05-22 14:11:35.482 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:12:11.564 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1766517 rows, 12 columns.
+2026-05-22 14:12:11.569 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,766,517 rows
+2026-05-22 14:12:11.683 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,262,973
+2026-05-22 14:12:11.712 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,262,787
+2026-05-22 14:12:11.715 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 5 impossible returns to NaN
+2026-05-22 14:12:11.802 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,262,787
+2026-05-22 14:12:12.017 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2003: saved 1,262,787 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2003/part-0.parquet
+2026-05-22 14:12:12.018 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2004: querying WRDS …
+2026-05-22 14:12:12.065 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:12:47.471 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1737946 rows, 12 columns.
+2026-05-22 14:12:47.477 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,737,946 rows
+2026-05-22 14:12:47.599 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,221,554
+2026-05-22 14:12:47.630 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,221,528
+2026-05-22 14:12:47.632 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 1 impossible returns to NaN
+2026-05-22 14:12:47.718 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,221,528
+2026-05-22 14:12:47.925 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2004: saved 1,221,528 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2004/part-0.parquet
+2026-05-22 14:12:47.925 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2005: querying WRDS …
+2026-05-22 14:12:47.972 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:12:58.419 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-22 14:12:58.420 | INFO     | tsfm_finance.pulls.pull_compustat:pull:258 | Pulling Compustat data for 1990–2026
+2026-05-22 14:12:58.420 | INFO     | tsfm_finance.utils.wrds_connection:__init__:120 | WRDSConnection created for user 'maxz73'
+2026-05-22 14:12:58.420 | INFO     | tsfm_finance.utils.wrds_connection:get_connection:291 | Singleton WRDSConnection initialised.
+2026-05-22 14:12:58.421 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   1990: querying WRDS …
+2026-05-22 14:12:58.421 | INFO     | tsfm_finance.utils.wrds_connection:_connect:126 | Connecting to WRDS as 'maxz73' ...
+2026-05-22 14:12:59.972 | INFO     | tsfm_finance.utils.wrds_connection:_connect:128 | WRDS connection established.
+2026-05-22 14:12:59.973 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:00.401 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 9550 rows, 23 columns.
+2026-05-22 14:13:00.401 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 9,550 Compustat rows
+2026-05-22 14:13:00.408 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 7,875
+2026-05-22 14:13:00.409 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 22 rows
+2026-05-22 14:13:00.412 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 7,875
+2026-05-22 14:13:00.421 | INFO     | tsfm_finance.pulls.pull_compustat:_validate_schema:142 | Schema validation passed on 500-row sample
+2026-05-22 14:13:00.435 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   1990: saved 7,875 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=1990/part-0.parquet
+2026-05-22 14:13:00.435 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   1991: querying WRDS …
+2026-05-22 14:13:00.475 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:00.698 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 9951 rows, 23 columns.
+2026-05-22 14:13:00.698 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 9,951 Compustat rows
+2026-05-22 14:13:00.705 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,021
+2026-05-22 14:13:00.706 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 19 rows
+2026-05-22 14:13:00.708 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,021
+2026-05-22 14:13:00.718 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   1991: saved 8,021 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=1991/part-0.parquet
+2026-05-22 14:13:00.718 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   1992: querying WRDS …
+2026-05-22 14:13:00.759 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:00.976 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 10620 rows, 23 columns.
+2026-05-22 14:13:00.976 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 10,620 Compustat rows
+2026-05-22 14:13:00.983 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,386
+2026-05-22 14:13:00.983 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 23 rows
+2026-05-22 14:13:00.986 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,386
+2026-05-22 14:13:00.996 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   1992: saved 8,386 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=1992/part-0.parquet
+2026-05-22 14:13:00.996 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   1993: querying WRDS …
+2026-05-22 14:13:01.041 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:01.275 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11446 rows, 23 columns.
+2026-05-22 14:13:01.275 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,446 Compustat rows
+2026-05-22 14:13:01.282 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 9,590
+2026-05-22 14:13:01.283 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 20 rows
+2026-05-22 14:13:01.286 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 9,590
+2026-05-22 14:13:01.298 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   1993: saved 9,590 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=1993/part-0.parquet
+2026-05-22 14:13:01.298 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   1994: querying WRDS …
+2026-05-22 14:13:01.339 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:01.568 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11849 rows, 23 columns.
+2026-05-22 14:13:01.569 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,849 Compustat rows
+2026-05-22 14:13:01.576 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 10,123
+2026-05-22 14:13:01.576 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 12 rows
+2026-05-22 14:13:01.580 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 10,123
+2026-05-22 14:13:01.591 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   1994: saved 10,123 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=1994/part-0.parquet
+2026-05-22 14:13:01.592 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   1995: querying WRDS …
+2026-05-22 14:13:01.634 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:01.885 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 12461 rows, 23 columns.
+2026-05-22 14:13:01.886 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 12,461 Compustat rows
+2026-05-22 14:13:01.893 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 11,046
+2026-05-22 14:13:01.894 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 19 rows
+2026-05-22 14:13:01.897 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 11,046
+2026-05-22 14:13:01.907 | INFO     | tsfm_finance.pulls.pull_compustat:_validate_schema:142 | Schema validation passed on 500-row sample
+2026-05-22 14:13:01.920 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   1995: saved 11,046 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=1995/part-0.parquet
+2026-05-22 14:13:01.921 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   1996: querying WRDS …
+2026-05-22 14:13:01.965 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:02.212 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 12675 rows, 23 columns.
+2026-05-22 14:13:02.213 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 12,675 Compustat rows
+2026-05-22 14:13:02.220 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 11,330
+2026-05-22 14:13:02.220 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 19 rows
+2026-05-22 14:13:02.224 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 11,330
+2026-05-22 14:13:02.237 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   1996: saved 11,330 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=1996/part-0.parquet
+2026-05-22 14:13:02.237 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   1997: querying WRDS …
+2026-05-22 14:13:02.281 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:02.528 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 12472 rows, 23 columns.
+2026-05-22 14:13:02.529 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 12,472 Compustat rows
+2026-05-22 14:13:02.536 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 11,078
+2026-05-22 14:13:02.536 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 29 rows
+2026-05-22 14:13:02.540 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 11,078
+2026-05-22 14:13:02.552 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   1997: saved 11,078 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=1997/part-0.parquet
+2026-05-22 14:13:02.553 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   1998: querying WRDS …
+2026-05-22 14:13:02.608 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:02.888 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 12588 rows, 23 columns.
+2026-05-22 14:13:02.888 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 12,588 Compustat rows
+2026-05-22 14:13:02.897 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 11,486
+2026-05-22 14:13:02.897 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 40 rows
+2026-05-22 14:13:02.901 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 11,486
+2026-05-22 14:13:02.914 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   1998: saved 11,486 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=1998/part-0.parquet
+2026-05-22 14:13:02.914 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   1999: querying WRDS …
+2026-05-22 14:13:02.958 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:03.216 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 12598 rows, 23 columns.
+2026-05-22 14:13:03.216 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 12,598 Compustat rows
+2026-05-22 14:13:03.224 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 11,641
+2026-05-22 14:13:03.225 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 33 rows
+2026-05-22 14:13:03.229 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 11,641
+2026-05-22 14:13:03.242 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   1999: saved 11,641 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=1999/part-0.parquet
+2026-05-22 14:13:03.242 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2000: querying WRDS …
+2026-05-22 14:13:03.287 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:03.537 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 12196 rows, 23 columns.
+2026-05-22 14:13:03.537 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 12,196 Compustat rows
+2026-05-22 14:13:03.544 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 11,277
+2026-05-22 14:13:03.545 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 29 rows
+2026-05-22 14:13:03.549 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 11,277
+2026-05-22 14:13:03.558 | INFO     | tsfm_finance.pulls.pull_compustat:_validate_schema:142 | Schema validation passed on 500-row sample
+2026-05-22 14:13:03.570 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2000: saved 11,277 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2000/part-0.parquet
+2026-05-22 14:13:03.571 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2001: querying WRDS …
+2026-05-22 14:13:03.612 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:03.862 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11641 rows, 23 columns.
+2026-05-22 14:13:03.863 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,641 Compustat rows
+2026-05-22 14:13:03.870 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 10,681
+2026-05-22 14:13:03.871 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 27 rows
+2026-05-22 14:13:03.874 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 10,681
+2026-05-22 14:13:03.887 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2001: saved 10,681 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2001/part-0.parquet
+2026-05-22 14:13:03.887 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2002: querying WRDS …
+2026-05-22 14:13:03.925 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:04.224 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11332 rows, 23 columns.
+2026-05-22 14:13:04.224 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,332 Compustat rows
+2026-05-22 14:13:04.231 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 10,278
+2026-05-22 14:13:04.232 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 30 rows
+2026-05-22 14:13:04.235 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 10,278
+2026-05-22 14:13:04.248 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2002: saved 10,278 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2002/part-0.parquet
+2026-05-22 14:13:04.248 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2003: querying WRDS …
+2026-05-22 14:13:04.294 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:04.580 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11118 rows, 23 columns.
+2026-05-22 14:13:04.580 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,118 Compustat rows
+2026-05-22 14:13:04.587 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 10,014
+2026-05-22 14:13:04.587 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 22 rows
+2026-05-22 14:13:04.591 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 10,014
+2026-05-22 14:13:04.603 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2003: saved 10,014 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2003/part-0.parquet
+2026-05-22 14:13:04.603 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2004: querying WRDS …
+2026-05-22 14:13:04.645 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:04.922 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 10948 rows, 23 columns.
+2026-05-22 14:13:04.922 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 10,948 Compustat rows
+2026-05-22 14:13:04.940 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 9,821
+2026-05-22 14:13:04.941 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 20 rows
+2026-05-22 14:13:04.945 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 9,821
+2026-05-22 14:13:04.956 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2004: saved 9,821 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2004/part-0.parquet
+2026-05-22 14:13:04.957 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2005: querying WRDS …
+2026-05-22 14:13:05.003 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:05.270 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 10887 rows, 23 columns.
+2026-05-22 14:13:05.270 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 10,887 Compustat rows
+2026-05-22 14:13:05.277 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 9,672
+2026-05-22 14:13:05.278 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 23 rows
+2026-05-22 14:13:05.281 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 9,672
+2026-05-22 14:13:05.291 | INFO     | tsfm_finance.pulls.pull_compustat:_validate_schema:142 | Schema validation passed on 500-row sample
+2026-05-22 14:13:05.302 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2005: saved 9,672 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2005/part-0.parquet
+2026-05-22 14:13:05.303 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2006: querying WRDS …
+2026-05-22 14:13:05.345 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:05.596 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 10891 rows, 23 columns.
+2026-05-22 14:13:05.596 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 10,891 Compustat rows
+2026-05-22 14:13:05.603 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 9,476
+2026-05-22 14:13:05.604 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 20 rows
+2026-05-22 14:13:05.607 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 9,476
+2026-05-22 14:13:05.619 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2006: saved 9,476 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2006/part-0.parquet
+2026-05-22 14:13:05.619 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2007: querying WRDS …
+2026-05-22 14:13:05.660 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:05.950 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 10907 rows, 23 columns.
+2026-05-22 14:13:05.951 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 10,907 Compustat rows
+2026-05-22 14:13:05.958 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 9,117
+2026-05-22 14:13:05.958 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 26 rows
+2026-05-22 14:13:05.961 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 9,117
+2026-05-22 14:13:05.972 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2007: saved 9,117 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2007/part-0.parquet
+2026-05-22 14:13:05.972 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2008: querying WRDS …
+2026-05-22 14:13:06.020 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:06.300 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 10720 rows, 23 columns.
+2026-05-22 14:13:06.300 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 10,720 Compustat rows
+2026-05-22 14:13:06.307 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,853
+2026-05-22 14:13:06.308 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 23 rows
+2026-05-22 14:13:06.311 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,853
+2026-05-22 14:13:06.321 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2008: saved 8,853 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2008/part-0.parquet
+2026-05-22 14:13:06.321 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2009: querying WRDS …
+2026-05-22 14:13:06.365 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:06.639 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 10654 rows, 23 columns.
+2026-05-22 14:13:06.639 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 10,654 Compustat rows
+2026-05-22 14:13:06.646 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,678
+2026-05-22 14:13:06.647 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 18 rows
+2026-05-22 14:13:06.649 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,678
+2026-05-22 14:13:06.660 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2009: saved 8,678 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2009/part-0.parquet
+2026-05-22 14:13:06.660 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2010: querying WRDS …
+2026-05-22 14:13:06.706 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:06.987 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 10875 rows, 23 columns.
+2026-05-22 14:13:06.987 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 10,875 Compustat rows
+2026-05-22 14:13:06.995 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,644
+2026-05-22 14:13:06.995 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 19 rows
+2026-05-22 14:13:06.998 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,644
+2026-05-22 14:13:07.007 | INFO     | tsfm_finance.pulls.pull_compustat:_validate_schema:142 | Schema validation passed on 500-row sample
+2026-05-22 14:13:07.018 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2010: saved 8,644 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2010/part-0.parquet
+2026-05-22 14:13:07.018 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2011: querying WRDS …
+2026-05-22 14:13:07.059 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:07.333 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11280 rows, 23 columns.
+2026-05-22 14:13:07.333 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,280 Compustat rows
+2026-05-22 14:13:07.341 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,640
+2026-05-22 14:13:07.341 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 16 rows
+2026-05-22 14:13:07.344 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,640
+2026-05-22 14:13:07.368 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2011: saved 8,640 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2011/part-0.parquet
+2026-05-22 14:13:07.368 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2012: querying WRDS …
+2026-05-22 14:13:07.411 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:07.699 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11680 rows, 23 columns.
+2026-05-22 14:13:07.699 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,680 Compustat rows
+2026-05-22 14:13:07.707 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 9,119
+2026-05-22 14:13:07.708 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 17 rows
+2026-05-22 14:13:07.711 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 9,119
+2026-05-22 14:13:07.722 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2012: saved 9,119 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2012/part-0.parquet
+2026-05-22 14:13:07.722 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2013: querying WRDS …
+2026-05-22 14:13:07.766 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:08.071 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11787 rows, 23 columns.
+2026-05-22 14:13:08.071 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,787 Compustat rows
+2026-05-22 14:13:08.079 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 9,275
+2026-05-22 14:13:08.079 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 17 rows
+2026-05-22 14:13:08.083 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 9,275
+2026-05-22 14:13:08.094 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2013: saved 9,275 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2013/part-0.parquet
+2026-05-22 14:13:08.094 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2014: querying WRDS …
+2026-05-22 14:13:08.136 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:08.418 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11660 rows, 23 columns.
+2026-05-22 14:13:08.418 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,660 Compustat rows
+2026-05-22 14:13:08.426 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 9,033
+2026-05-22 14:13:08.426 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 16 rows
+2026-05-22 14:13:08.429 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 9,033
+2026-05-22 14:13:08.440 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2014: saved 9,033 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2014/part-0.parquet
+2026-05-22 14:13:08.440 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2015: querying WRDS …
+2026-05-22 14:13:08.486 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:08.765 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11481 rows, 23 columns.
+2026-05-22 14:13:08.765 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,481 Compustat rows
+2026-05-22 14:13:08.772 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,693
+2026-05-22 14:13:08.773 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 18 rows
+2026-05-22 14:13:08.776 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,693
+2026-05-22 14:13:08.785 | INFO     | tsfm_finance.pulls.pull_compustat:_validate_schema:142 | Schema validation passed on 500-row sample
+2026-05-22 14:13:08.795 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2015: saved 8,693 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2015/part-0.parquet
+2026-05-22 14:13:08.795 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2016: querying WRDS …
+2026-05-22 14:13:08.846 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:09.114 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11461 rows, 23 columns.
+2026-05-22 14:13:09.114 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,461 Compustat rows
+2026-05-22 14:13:09.122 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,427
+2026-05-22 14:13:09.122 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 17 rows
+2026-05-22 14:13:09.125 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,427
+2026-05-22 14:13:09.136 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2016: saved 8,427 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2016/part-0.parquet
+2026-05-22 14:13:09.136 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2017: querying WRDS …
+2026-05-22 14:13:09.177 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:09.428 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11352 rows, 23 columns.
+2026-05-22 14:13:09.428 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,352 Compustat rows
+2026-05-22 14:13:09.436 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,214
+2026-05-22 14:13:09.436 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 20 rows
+2026-05-22 14:13:09.439 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,214
+2026-05-22 14:13:09.449 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2017: saved 8,214 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2017/part-0.parquet
+2026-05-22 14:13:09.449 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2018: querying WRDS …
+2026-05-22 14:13:09.492 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:09.745 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11437 rows, 23 columns.
+2026-05-22 14:13:09.746 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,437 Compustat rows
+2026-05-22 14:13:09.753 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,051
+2026-05-22 14:13:09.753 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 22 rows
+2026-05-22 14:13:09.756 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,051
+2026-05-22 14:13:09.765 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2018: saved 8,051 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2018/part-0.parquet
+2026-05-22 14:13:09.765 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2019: querying WRDS …
+2026-05-22 14:13:09.811 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:10.119 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 11712 rows, 23 columns.
+2026-05-22 14:13:10.119 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 11,712 Compustat rows
+2026-05-22 14:13:10.126 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,053
+2026-05-22 14:13:10.127 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 20 rows
+2026-05-22 14:13:10.129 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,053
+2026-05-22 14:13:10.139 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2019: saved 8,053 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2019/part-0.parquet
+2026-05-22 14:13:10.139 | INFO     | tsfm_finance.pulls.pull_compustat:pull:267 |   2020: loading from cache
+2026-05-22 14:13:10.254 | INFO     | tsfm_finance.pulls.pull_compustat:pull:267 |   2021: loading from cache
+2026-05-22 14:13:10.256 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2022: querying WRDS …
+2026-05-22 14:13:10.312 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:10.637 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 12581 rows, 23 columns.
+2026-05-22 14:13:10.637 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 12,581 Compustat rows
+2026-05-22 14:13:10.646 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 8,125
+2026-05-22 14:13:10.646 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 16 rows
+2026-05-22 14:13:10.649 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 8,125
+2026-05-22 14:13:10.658 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2022: saved 8,125 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2022/part-0.parquet
+2026-05-22 14:13:10.658 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2023: querying WRDS …
+2026-05-22 14:13:10.708 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:10.971 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 12687 rows, 23 columns.
+2026-05-22 14:13:10.971 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 12,687 Compustat rows
+2026-05-22 14:13:10.978 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 7,959
+2026-05-22 14:13:10.979 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 16 rows
+2026-05-22 14:13:10.982 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 7,959
+2026-05-22 14:13:10.991 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2023: saved 7,959 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2023/part-0.parquet
+2026-05-22 14:13:10.991 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2024: querying WRDS …
+2026-05-22 14:13:11.037 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:11.308 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 12868 rows, 23 columns.
+2026-05-22 14:13:11.308 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 12,868 Compustat rows
+2026-05-22 14:13:11.316 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 7,602
+2026-05-22 14:13:11.316 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 17 rows
+2026-05-22 14:13:11.319 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 7,602
+2026-05-22 14:13:11.328 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2024: saved 7,602 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2024/part-0.parquet
+2026-05-22 14:13:11.328 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2025: querying WRDS …
+2026-05-22 14:13:11.371 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:11.668 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 12918 rows, 23 columns.
+2026-05-22 14:13:11.668 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 12,918 Compustat rows
+2026-05-22 14:13:11.675 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 6,625
+2026-05-22 14:13:11.676 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 16 rows
+2026-05-22 14:13:11.678 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 6,625
+2026-05-22 14:13:11.688 | INFO     | tsfm_finance.pulls.pull_compustat:_validate_schema:142 | Schema validation passed on 500-row sample
+2026-05-22 14:13:11.696 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2025: saved 6,625 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2025/part-0.parquet
+2026-05-22 14:13:11.696 | INFO     | tsfm_finance.pulls.pull_compustat:pull:271 |   2026: querying WRDS …
+2026-05-22 14:13:11.752 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (389 chars): 
+        SELECT gvkey, datadate, fyear, at, ceq, lt, sale, ni, oancf, csho, prcc_f, revt, xsga, capx, dp, dltt, dlc, che...
+2026-05-22 14:13:11.816 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 315 rows, 23 columns.
+2026-05-22 14:13:11.817 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:182 | Normalizing 315 Compustat rows
+2026-05-22 14:13:11.820 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:201 |   After at > 0 filter: 194
+2026-05-22 14:13:11.820 | INFO     | tsfm_finance.pulls.pull_compustat:_normalize:211 |   Derived book_equity from at-lt for 2 rows
+2026-05-22 14:13:11.821 | DEBUG    | tsfm_finance.pulls.pull_compustat:_normalize:221 |   Final normalised row count: 194
+2026-05-22 14:13:11.823 | INFO     | tsfm_finance.pulls.pull_compustat:pull:288 |   2026: saved 194 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/compustat/year=2026/part-0.parquet
+2026-05-22 14:13:11.824 | INFO     | tsfm_finance.utils.wrds_connection:close:164 | WRDS connection closed.
+2026-05-22 14:13:11.875 | SUCCESS  | tsfm_finance.pulls.pull_compustat:pull:302 | Compustat pull complete: 331,379 total rows
+2026-05-22 14:13:27.261 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1739746 rows, 12 columns.
+2026-05-22 14:13:27.268 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,739,746 rows
+2026-05-22 14:13:27.387 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,207,249
+2026-05-22 14:13:27.422 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,207,221
+2026-05-22 14:13:27.424 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 3 impossible returns to NaN
+2026-05-22 14:13:27.511 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,207,221
+2026-05-22 14:13:27.530 | INFO     | tsfm_finance.pulls.pull_crsp:_validate_schema:113 | Schema validation passed on 500-row sample
+2026-05-22 14:13:27.732 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2005: saved 1,207,221 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2005/part-0.parquet
+2026-05-22 14:13:27.732 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2006: querying WRDS …
+2026-05-22 14:13:27.781 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:14:03.501 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1736814 rows, 12 columns.
+2026-05-22 14:14:03.506 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,736,814 rows
+2026-05-22 14:14:03.608 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,183,572
+2026-05-22 14:14:03.639 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,183,556
+2026-05-22 14:14:03.642 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 1 impossible returns to NaN
+2026-05-22 14:14:03.716 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,183,556
+2026-05-22 14:14:03.919 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2006: saved 1,183,556 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2006/part-0.parquet
+2026-05-22 14:14:03.919 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2007: querying WRDS …
+2026-05-22 14:14:03.966 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:14:30.283 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1773601 rows, 12 columns.
+2026-05-22 14:14:30.287 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,773,601 rows
+2026-05-22 14:14:30.385 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,164,713
+2026-05-22 14:14:30.412 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,164,630
+2026-05-22 14:14:30.415 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 2 impossible returns to NaN
+2026-05-22 14:14:30.495 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,164,630
+2026-05-22 14:14:30.697 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2007: saved 1,164,630 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2007/part-0.parquet
+2026-05-22 14:14:30.697 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2008: querying WRDS …
+2026-05-22 14:14:30.757 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:15:04.399 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1778854 rows, 12 columns.
+2026-05-22 14:15:04.404 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,778,854 rows
+2026-05-22 14:15:04.512 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,134,976
+2026-05-22 14:15:04.538 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,134,824
+2026-05-22 14:15:04.539 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 7 impossible returns to NaN
+2026-05-22 14:15:04.623 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,134,824
+2026-05-22 14:15:04.814 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2008: saved 1,134,824 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2008/part-0.parquet
+2026-05-22 14:15:04.815 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2009: querying WRDS …
+2026-05-22 14:15:04.865 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:15:30.942 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1696613 rows, 12 columns.
+2026-05-22 14:15:30.946 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,696,613 rows
+2026-05-22 14:15:31.047 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,053,465
+2026-05-22 14:15:31.076 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,053,440
+2026-05-22 14:15:31.077 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 14 impossible returns to NaN
+2026-05-22 14:15:31.151 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,053,440
+2026-05-22 14:15:31.329 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2009: saved 1,053,440 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2009/part-0.parquet
+2026-05-22 14:15:31.329 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2010: querying WRDS …
+2026-05-22 14:15:31.372 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:15:56.332 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1687080 rows, 12 columns.
+2026-05-22 14:15:56.336 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,687,080 rows
+2026-05-22 14:15:56.442 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,011,884
+2026-05-22 14:15:56.473 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,011,868
+2026-05-22 14:15:56.474 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 2 impossible returns to NaN
+2026-05-22 14:15:56.541 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,011,868
+2026-05-22 14:15:56.558 | INFO     | tsfm_finance.pulls.pull_crsp:_validate_schema:113 | Schema validation passed on 500-row sample
+2026-05-22 14:15:56.729 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2010: saved 1,011,868 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2010/part-0.parquet
+2026-05-22 14:15:56.729 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2011: querying WRDS …
+2026-05-22 14:15:56.777 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:16:18.892 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1706370 rows, 12 columns.
+2026-05-22 14:16:18.895 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,706,370 rows
+2026-05-22 14:16:18.988 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 973,454
+2026-05-22 14:16:19.014 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 973,416
+2026-05-22 14:16:19.015 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 1 impossible returns to NaN
+2026-05-22 14:16:19.075 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 973,416
+2026-05-22 14:16:19.248 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2011: saved 973,416 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2011/part-0.parquet
+2026-05-22 14:16:19.249 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2012: querying WRDS …
+2026-05-22 14:16:19.300 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:16:45.631 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1700894 rows, 12 columns.
+2026-05-22 14:16:45.635 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,700,894 rows
+2026-05-22 14:16:45.730 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 932,363
+2026-05-22 14:16:45.753 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 932,336
+2026-05-22 14:16:45.755 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 1 impossible returns to NaN
+2026-05-22 14:16:45.811 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 932,336
+2026-05-22 14:16:45.966 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2012: saved 932,336 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2012/part-0.parquet
+2026-05-22 14:16:45.967 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2013: querying WRDS …
+2026-05-22 14:16:46.013 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:17:18.841 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1708854 rows, 12 columns.
+2026-05-22 14:17:18.844 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,708,854 rows
+2026-05-22 14:17:18.944 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 917,944
+2026-05-22 14:17:18.968 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 917,853
+2026-05-22 14:17:18.970 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 6 impossible returns to NaN
+2026-05-22 14:17:19.038 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 917,853
+2026-05-22 14:17:19.187 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2013: saved 917,853 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2013/part-0.parquet
+2026-05-22 14:17:19.188 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2014: querying WRDS …
+2026-05-22 14:17:19.238 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:17:51.960 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1770662 rows, 12 columns.
+2026-05-22 14:17:51.966 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,770,662 rows
+2026-05-22 14:17:52.072 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 938,892
+2026-05-22 14:17:52.100 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 938,666
+2026-05-22 14:17:52.101 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 7 impossible returns to NaN
+2026-05-22 14:17:52.164 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 938,666
+2026-05-22 14:17:52.324 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2014: saved 938,666 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2014/part-0.parquet
+2026-05-22 14:17:52.324 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2015: querying WRDS …
+2026-05-22 14:17:52.370 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:18:28.756 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1820358 rows, 12 columns.
+2026-05-22 14:18:28.762 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,820,358 rows
+2026-05-22 14:18:28.893 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 949,929
+2026-05-22 14:18:28.939 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 949,776
+2026-05-22 14:18:28.941 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 11 impossible returns to NaN
+2026-05-22 14:18:29.043 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 949,776
+2026-05-22 14:18:29.061 | INFO     | tsfm_finance.pulls.pull_crsp:_validate_schema:113 | Schema validation passed on 500-row sample
+2026-05-22 14:18:29.242 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2015: saved 949,776 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2015/part-0.parquet
+2026-05-22 14:18:29.242 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2016: querying WRDS …
+2026-05-22 14:18:29.294 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:19:02.688 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1828555 rows, 12 columns.
+2026-05-22 14:19:02.694 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,828,555 rows
+2026-05-22 14:19:02.811 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 923,633
+2026-05-22 14:19:02.840 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 923,367
+2026-05-22 14:19:02.841 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 16 impossible returns to NaN
+2026-05-22 14:19:02.910 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 923,367
+2026-05-22 14:19:03.076 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2016: saved 923,367 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2016/part-0.parquet
+2026-05-22 14:19:03.077 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2017: querying WRDS …
+2026-05-22 14:19:03.123 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:19:38.816 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1827893 rows, 12 columns.
+2026-05-22 14:19:38.822 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,827,893 rows
+2026-05-22 14:19:38.944 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 902,688
+2026-05-22 14:19:38.971 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 902,541
+2026-05-22 14:19:38.971 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 11 impossible returns to NaN
+2026-05-22 14:19:39.044 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 902,541
+2026-05-22 14:19:39.206 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2017: saved 902,541 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2017/part-0.parquet
+2026-05-22 14:19:39.206 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2018: querying WRDS …
+2026-05-22 14:19:39.255 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:20:11.138 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1869604 rows, 12 columns.
+2026-05-22 14:20:11.143 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,869,604 rows
+2026-05-22 14:20:11.276 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 901,932
+2026-05-22 14:20:11.303 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 901,702
+2026-05-22 14:20:11.304 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 10 impossible returns to NaN
+2026-05-22 14:20:11.385 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 901,702
+2026-05-22 14:20:11.548 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2018: saved 901,702 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2018/part-0.parquet
+2026-05-22 14:20:11.549 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2019: querying WRDS …
+2026-05-22 14:20:11.618 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:20:47.892 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 1912085 rows, 12 columns.
+2026-05-22 14:20:47.896 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 1,912,085 rows
+2026-05-22 14:20:48.035 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 906,151
+2026-05-22 14:20:48.067 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 906,113
+2026-05-22 14:20:48.069 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 12 impossible returns to NaN
+2026-05-22 14:20:48.144 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 906,113
+2026-05-22 14:20:48.319 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2019: saved 906,113 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2019/part-0.parquet
+2026-05-22 14:20:48.320 | INFO     | tsfm_finance.pulls.pull_crsp:pull:248 |   2020: loading from cache
+2026-05-22 14:20:48.442 | INFO     | tsfm_finance.pulls.pull_crsp:pull:248 |   2021: loading from cache
+2026-05-22 14:20:48.469 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2022: querying WRDS …
+2026-05-22 14:20:48.514 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:21:43.118 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 2390163 rows, 12 columns.
+2026-05-22 14:21:43.123 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 2,390,163 rows
+2026-05-22 14:21:43.284 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,106,194
+2026-05-22 14:21:43.325 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,106,178
+2026-05-22 14:21:43.327 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 10 impossible returns to NaN
+2026-05-22 14:21:43.446 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,106,178
+2026-05-22 14:21:43.648 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2022: saved 1,106,178 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2022/part-0.parquet
+2026-05-22 14:21:43.648 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2023: querying WRDS …
+2026-05-22 14:21:43.694 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:22:33.373 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 2353845 rows, 12 columns.
+2026-05-22 14:22:33.380 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 2,353,845 rows
+2026-05-22 14:22:33.494 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 1,041,061
+2026-05-22 14:22:33.520 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 1,041,022
+2026-05-22 14:22:33.522 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 23 impossible returns to NaN
+2026-05-22 14:22:33.594 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 1,041,022
+2026-05-22 14:22:33.767 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2023: saved 1,041,022 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2023/part-0.parquet
+2026-05-22 14:22:33.768 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2024: querying WRDS …
+2026-05-22 14:22:33.812 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:23:21.937 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 2400962 rows, 12 columns.
+2026-05-22 14:23:21.943 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:156 | Normalizing 2,400,962 rows
+2026-05-22 14:23:22.057 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:170 |   After shrcd/exchcd filter: 987,277
+2026-05-22 14:23:22.080 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:174 |   After prc filter: 987,265
+2026-05-22 14:23:22.081 | INFO     | tsfm_finance.pulls.pull_crsp:_normalize:180 |   Setting 34 impossible returns to NaN
+2026-05-22 14:23:22.136 | DEBUG    | tsfm_finance.pulls.pull_crsp:_normalize:202 |   Final normalised row count: 987,265
+2026-05-22 14:23:22.300 | INFO     | tsfm_finance.pulls.pull_crsp:pull:269 |   2024: saved 987,265 rows → /Users/maxzhalilo/Finm/Finm-332/FINM-33200-Final-Project/tsfm_finance/data/crsp/year=2024/part-0.parquet
+2026-05-22 14:23:22.301 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2025: querying WRDS …
+2026-05-22 14:23:22.346 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:23:22.397 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 0 rows, 12 columns.
+2026-05-22 14:23:22.404 | WARNING  | tsfm_finance.pulls.pull_crsp:pull:256 |   2025: no data returned, skipping
+2026-05-22 14:23:22.404 | INFO     | tsfm_finance.pulls.pull_crsp:pull:252 |   2026: querying WRDS …
+2026-05-22 14:23:22.448 | DEBUG    | tsfm_finance.utils.wrds_connection:query:197 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-22 14:23:22.493 | INFO     | tsfm_finance.utils.wrds_connection:query:201 | Query returned 0 rows, 12 columns.
+2026-05-22 14:23:22.494 | WARNING  | tsfm_finance.pulls.pull_crsp:pull:256 |   2026: no data returned, skipping
+2026-05-22 14:23:22.494 | INFO     | tsfm_finance.utils.wrds_connection:close:164 | WRDS connection closed.
+2026-05-22 14:23:27.306 | SUCCESS  | tsfm_finance.pulls.pull_crsp:pull:283 | CRSP pull complete: 43,717,077 total rows

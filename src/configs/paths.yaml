@@ -1,0 +1,11 @@
+data_dir: data
+crsp_dir: data/crsp
+compustat_dir: data/compustat
+linking_dir: data/linking
+riskfree_dir: data/riskfree
+macro_dir: data/macro
+factors_dir: data/factors
+options_dir: data/options
+ibes_dir: data/ibes
+features_dir: data/features
+datasets_dir: data/datasets

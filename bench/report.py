@@ -12,10 +12,10 @@ def write_long_csv(out_df: pd.DataFrame, path: Path) -> None:
     out_df.to_csv(path, index=False)
 
 
-def summary_table(out_df: pd.DataFrame) -> pd.DataFrame:
+def summary_table(out_df: pd.DataFrame, bars_per_year: int = metrics.TRADING_DAYS) -> pd.DataFrame:
     rows = []
     for name, group in out_df.groupby("model", sort=False):
-        s = metrics.summarize(group)
+        s = metrics.summarize(group, bars_per_year=bars_per_year)
         s["model"] = name
         rows.append(s)
     df = pd.DataFrame(rows).set_index("model")
@@ -25,8 +25,9 @@ def summary_table(out_df: pd.DataFrame) -> pd.DataFrame:
     return df[cols]
 
 
-def write_summary(out_df: pd.DataFrame, path: Path) -> pd.DataFrame:
-    tab = summary_table(out_df)
+def write_summary(out_df: pd.DataFrame, path: Path,
+                  bars_per_year: int = metrics.TRADING_DAYS) -> pd.DataFrame:
+    tab = summary_table(out_df, bars_per_year=bars_per_year)
     path.parent.mkdir(parents=True, exist_ok=True)
     tab.to_csv(path.with_suffix(".csv"))
     with path.with_suffix(".md").open("w") as f:

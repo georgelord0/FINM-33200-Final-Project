@@ -5,3 +5,5 @@ data_cache/
 results/
 .venv/
 .DS_Store
+.env
+.claude

@@ -1,0 +1,27 @@
+# Pure latency benchmark — synthetic intraday panel so timings aren't polluted
+# by network I/O or vendor caching. Vary n_assets to build a throughput curve;
+# duplicate this config with different n_assets values to scan.
+
+data:
+  source: synthetic_intraday
+  interval: "1min"
+  start: "2025-01-02 09:30"
+  end: "2025-01-05 16:00"
+  n_assets: 100
+  seed: 0
+  covariates:
+    lags: [1, 5, 60]
+    vol_window: 60
+    mom_long: 390
+    mom_short: 60
+    log_vol_z_window: 390
+
+models: [zero, mean, ridge, lightgbm, catboost]
+
+horizon: 1
+train_end: "2025-01-03 16:00"
+oos_start: "2025-01-05 09:30"
+oos_end:   "2025-01-05 16:00"
+bars_per_year: 98280
+latency: true
+output_dir: ./results/latency_synthetic

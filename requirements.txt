@@ -10,3 +10,6 @@ tabulate==0.9.0
 matplotlib==3.9.2
 pyyaml==6.0.1
 pytest==9.0.2
+python-dotenv>=1.0
+wrds>=3.4
+chronos-forecasting>=2.2

@@ -5,6 +5,7 @@ from pathlib import Path
 import pandas as pd
 
 from . import metrics
+from .markdown import dataframe_to_markdown
 
 
 def write_long_csv(out_df: pd.DataFrame, path: Path) -> None:
@@ -31,6 +32,6 @@ def write_summary(out_df: pd.DataFrame, path: Path,
     path.parent.mkdir(parents=True, exist_ok=True)
     tab.to_csv(path.with_suffix(".csv"))
     with path.with_suffix(".md").open("w") as f:
-        f.write(tab.to_markdown(floatfmt=".4f"))
+        f.write(dataframe_to_markdown(tab, floatfmt=".4f"))
         f.write("\n")
     return tab

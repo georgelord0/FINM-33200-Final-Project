@@ -1,0 +1,19 @@
+data:
+  source: wrds_panel
+  panel_path: ./src/data/datasets/panel.parquet
+  start: "2021-12-01"
+  end: "2022-01-31"
+  oos_year: 2022
+  top_n_by_mcap: 5
+  min_history_days: 10
+  feature_set: core
+
+models:
+  - zero
+  - mean
+  - ridge
+
+oos_year: 2022
+horizon: 1
+bars_per_year: 252
+output_dir: ./results/wrds_smoke

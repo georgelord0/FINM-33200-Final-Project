@@ -1,127 +1,236 @@
 # FINM-33200 Final Project
 
-Benchmarking covariate-supported time-series foundation models on US equity
-return forecasting. Extends Rahimikia, Ni and Wang (2025), "Re(Visiting) Time
-Series Foundation Models in Finance" (arXiv:2511.18578), which only evaluated
-univariate TSFMs and flagged multivariate models as future work.
+Benchmarking time-series foundation models for next-day US equity excess-return
+forecasting.
 
-We test multivariate / covariate-aware TSFMs (TimesFM 2.5, Chronos2, MOIRAI)
-against linear and tree baselines on US daily panels (S&P 500 via yfinance
-and Fama-French 25 portfolios). Plan also covers a short-horizon (1s to 1m)
-extension for runtime / latency analysis.
+The project asks whether zero-shot and covariate-aware TSFMs improve forecasts
+relative to simple linear and tree baselines. The canonical pipeline is
+WRDS-backed: `src/` pulls and builds the daily CRSP/Compustat/Fama-French panel,
+and `bench/` evaluates models with a common walk-forward protocol. Fama-French
+25 portfolios remain as a public-data sanity benchmark, and WRDS TAQ provides
+the short-horizon latency extension.
+
+Current default benchmark configs evaluate zero, mean, Ridge, LightGBM, CatBoost,
+Chronos-Bolt, Chronos-2, TimesFM 2.5 target-only, and TimesFM 2.5 XReg. A MOIRAI
+wrapper is implemented and registered, but it is not included in the default
+full configs because the current Uni2TS dependency stack pins older Torch
+versions that conflict with the RTX 50-series CUDA build used for the final run.
+
+GitHub Pages report: build `docs/index.html` with the report stage, then publish
+the repository from the `docs/` folder.
 
 ## Team
 
-- Max: data collection (returns + covariates)
-- George: foundation model wrappers (standardised predict interface)
-- Charles: benchmark harness, baselines, metrics, results (this slice)
-- Cesare: short-horizon benchmark + latency
+- Max: WRDS data collection and feature pipeline
+- George: foundation model wrappers and standardized forecast interface
+- Charles: benchmark harness, baselines, metrics, plots, result reporting
+- Cesare: short-horizon benchmark and latency instrumentation
 
-## Layout
+## Setup
 
+Use Python 3.11 or newer. On the Windows/RTX 50-series environment used for the
+current run, install from `requirements.txt`; it pins the CUDA 13 Torch wheel
+needed for Blackwell GPUs.
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -r requirements.txt
+python -m pip install -e . --no-deps
 ```
-bench/                 Harness package
-  protocols.py           Panel + Forecaster types
-  metrics.py             R^2_oos, MAE, RMSE, dir-acc, F1, L/S portfolio stats
-  walkforward.py         Expanding-window driver (run, run_window)
-  baselines.py           Zero, Mean, Ridge, LightGBM, CatBoost
-  chronos_bolt.py        Chronos-Bolt univariate zero-shot wrapper
-  chronos_two.py         Chronos-2 multivariate zero-shot wrapper
-  latency.py             TimedForecaster, percentile summary, plots
-  data_yfinance.py       S&P 500 daily data via yfinance + Ken French volume
-  data_ff25.py           Fama-French 25 portfolios (Ken French)
-  data_intraday.py       Intraday dispatcher (source → loader)
-  data_yf_intraday.py    yfinance 1m loader (smoke only; ~30d history limit)
-  data_wrds.py           WRDS TAQ tick→bar loader (.env: WRDS_USERNAME/PASSWORD)
-  data_synthetic.py      Synthetic intraday panel (latency benchmarks, tests)
-  covariates_intraday.py Backward-only bar-count covariate builder
-  report.py              CSV + markdown summary
-  plots.py               Sharpe-by-model bar, L/S equity curves
-  aggregate.py           Cross-run summary combiner
-  run.py                 CLI: python -m bench.run --config ...
-configs/               YAML run configs (daily, intraday 1m/1s, latency)
-tests/                 pytest suite (synthetic fixture, leakage guards,
-                       intraday, latency, offline WRDS)
+
+For a lighter environment that only needs the package, report tooling, and
+tests, use:
+
+```powershell
+python -m pip install -e ".[report,dev]"
 ```
+
+If you are not using an NVIDIA RTX 50-series GPU, replace the Torch line in
+`requirements.txt` with the platform-specific install command from PyTorch
+before installing the model stack.
+
+Verify CUDA when running the full TSFM benchmark:
+
+```powershell
+python -c "import torch; print(torch.__version__, torch.version.cuda); print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0)); print(torch.cuda.get_arch_list())"
+```
+
+## WRDS Credentials
+
+WRDS credentials are required for the canonical results. Create `.env` from
+`.env.example`:
+
+```text
+WRDS_USERNAME=your_username
+WRDS_PASSWORD=your_password
+DATA_DIR=./src/data
+HF_HUB_DISABLE_SYMLINKS_WARNING=true
+```
+
+Do not commit `.env`, raw WRDS data, local caches, or model weight caches.
+
+### WRDS MFA
+
+`scripts/reproduce.py` waits for Duo/MFA by default. Start the preflight, approve
+the Duo push if one appears, and let the command continue polling:
+
+```powershell
+python scripts/reproduce.py --stage auth --auth-timeout 600 --auth-interval 10
+```
+
+If the preflight returns `ok = 1`, run the remaining stages. If it times out,
+verify that `.env` contains your normal WRDS username and password.
 
 ## Reproduce
 
-```sh
-pip install -r requirements.txt
-pytest                                                # 24 tests
+Run the full project pipeline:
 
-# Daily replication (Charles's slice)
-python -m bench.run --config configs/smoke.yaml       # 10-ticker exploratory
-python -m bench.run --config configs/replication_us_2022.yaml
-python -m bench.run --config configs/ff25_2023.yaml   # FF25 daily portfolios
+```powershell
+python scripts/reproduce.py --stage all
 ```
 
-### Short-horizon + latency (Cesare's slice)
+Run one stage at a time:
 
-```sh
-# Synthetic — no network or credentials, deterministic timing
-OMP_NUM_THREADS=1 python -m bench.run --config configs/latency_synthetic.yaml
-
-# yfinance 1m smoke — recent ~7-day window only (yfinance limit)
-OMP_NUM_THREADS=1 python -m bench.run --config configs/intraday_1m_smoke.yaml
-
-# WRDS TAQ — institutional millisecond ticks resampled to 1s / 1m bars.
-# Needs WRDS_USERNAME and WRDS_PASSWORD in .env (see .env.example).
-OMP_NUM_THREADS=1 python -m bench.run --config configs/intraday_1s_wrds.yaml
-OMP_NUM_THREADS=1 python -m bench.run --config configs/intraday_1m_wrds.yaml
+```powershell
+python scripts/reproduce.py --stage pull
+python scripts/reproduce.py --stage features
+python scripts/reproduce.py --stage panel
+python scripts/reproduce.py --stage bench
+python scripts/reproduce.py --stage report
 ```
 
-**macOS reminder**: PyTorch and LightGBM both ship libomp; loading both in
-one process segfaults on macOS. `OMP_NUM_THREADS=1` serializes OpenMP and
-avoids the race. Linux / CUDA boxes don't need it.
+The full pipeline writes the licensed WRDS panel under `src/data/`, which is
+ignored by Git and should not be committed. The report stage writes
+`results/system_info.json`, executes `notebooks/report.ipynb`, and exports
+`docs/index.html` with a cleaned runtime environment table covering OS, CPU,
+GPU, RAM, CUDA, and key package versions.
 
-**CUDA models**: Chronos wrappers default to `device="cuda"`. On a
-CPU-only box, append `-cpu` to the model name in the config (e.g.
-`chronos-bolt-60-cpu`); the `chronos-{family}-{ctx}[-cpu|-cuda]` regex in
-[bench/run.py](bench/run.py) handles dispatch.
+Default benchmark configs run by `--stage bench`:
 
-Outputs land in `results/<config-name>/`:
-- `forecasts.csv`: long-format (date, asset_id, model, forecast, realized)
-- `summary.csv` / `summary.md`: per-model accuracy + L/S portfolio table
-- `sharpe_by_model.png`, `equity_curves.png`
-- when `latency: true`: `latency.csv` / `latency.md`, `latency_p95.png`,
-  `latency_throughput.png` (per-call mean / p50 / p95 / p99, plus
-  `assets_per_sec` and `bars_per_sec` throughput)
+```powershell
+python -m bench.run --config configs/wrds_daily_2022_full.yaml
+python -m bench.run --config configs/wrds_daily_2023_full.yaml
+python -m bench.run --config configs/ff25_2023.yaml
+python -m bench.run --config configs/intraday_1m_wrds.yaml
+```
 
-### Data sources
+Run a single config through the reproduction driver:
 
-| Source | Granularity | Cost | Notes |
-|---|---|---|---|
-| `yfinance` | daily | free | survivorship-biased SP500 |
-| `ff25` | daily | free | Fama-French 25 portfolios |
-| `yfinance_intraday` | 1m | free | ~7d/request, ~30d total history |
-| `wrds` | 1s, 1m | institutional | needs `WRDS_USERNAME` + `WRDS_PASSWORD`; TAQ `taqm_<year>` |
-| `synthetic_intraday` | configurable | free | AR(1)+factor; for latency / tests |
+```powershell
+python scripts/reproduce.py --stage bench --config configs/wrds_smoke.yaml --no-plots
+```
 
-## Metric definitions
+CPU/local smoke checks:
 
-- `r2_oos`: `1 - sum((r - r_hat)^2) / sum(r^2)` pooled over all (date, asset),
-  matching Eq. 13 of the paper (Gu et al. 2020 convention). Benchmarks against
-  a zero prediction, not the historical mean.
-- `mae`, `rmse`: standard absolute / squared error metrics.
-- `dir_acc`: share of correct sign predictions.
-- `f1`: macro-F1 over {up, down}.
-- L/S portfolio: daily decile sort by forecast; long top decile minus short
-  bottom decile, equal-weighted, no transaction costs. Returns NaN when
-  forecasts have no within-date dispersion (e.g. Zero baseline).
-- `ann_return`, `ann_vol`, `sharpe`: mean / std × `bars_per_year` and
-  `sqrt(bars_per_year)`. Set per config: 252 (daily, default), 98 280 = 390 × 252
-  (1-minute), 5 896 800 = 23 400 × 252 (1-second).
-- `max_dd`: minimum of cumulative-return drawdown series.
+```powershell
+python -m bench.run --config configs/smoke.yaml --no-plots
+python -m bench.run --config configs/wrds_smoke.yaml --no-plots
+```
 
-## Notes
+## Outputs
 
-- yfinance is the exploratory data source. Survivorship bias from current
-  S&P 500 membership is acknowledged; replace via the same `Panel` interface
-  once a clean CRSP pipeline is available.
-- TSFM wrappers plug in as additional `Forecaster` implementations. The
-  protocol in `bench/protocols.py` is provisional and may add a
-  quantile-return mode once integration starts.
-- `_aligned_xy` in `bench/baselines.py` filters training rows by target date
-  (not feature date) to keep OOS-year returns out of training labels. See
-  `tests/test_leakage.py` for the regression test.
+Benchmark artifacts land in `results/<config-name>/`:
+
+- `forecasts.csv`: long-format forecasts and realized returns
+- `summary.csv` and `summary.md`: accuracy and long-short portfolio metrics
+- `sharpe_by_model.png` and `equity_curves.png`
+- `latency.csv`, `latency.md`, and latency plots for latency-enabled configs;
+  the WRDS intraday config records latency for baselines, Chronos, and TimesFM
+
+Current generated result directories include:
+
+- `results/wrds_daily_2022_full/`
+- `results/wrds_daily_2023_full/`
+- `results/ff25_2023/`
+- `results/intraday_1m_wrds/`
+- smoke/debug runs under `results/wrds_*_smoke/`
+
+Raw WRDS source data and local caches are intentionally excluded from version
+control.
+
+## GitHub Pages
+
+After running the report stage, commit the report output and publish Pages from
+the `docs/` folder:
+
+```powershell
+git add README.md AI_USAGE.md requirements.txt pyproject.toml configs bench src scripts tests notebooks/report.ipynb docs/index.html results
+git commit -m "Finalize benchmark report"
+git push origin main
+```
+
+On GitHub, open the repository settings, choose **Pages**, set the source to
+**Deploy from a branch**, select branch `main`, folder `/docs`, and save. Do not
+add `.env`, `src/data/`, `.venv/`, `data_cache/`, or model caches.
+
+## Project Layout
+
+```text
+src/
+  pulls/                 WRDS pulls for CRSP, Compustat, linking, factors, macro
+  features/              Leakage-controlled feature builders
+  datasets/              Canonical long panel and tensor builders
+bench/
+  protocols.py           Shared Panel and Forecaster protocol
+  data_wrds_panel.py     Adapter from src panel to bench Panel
+  baselines.py           Zero, mean, Ridge, LightGBM, CatBoost
+  chronos_bolt.py        Chronos-Bolt target-only wrapper
+  chronos_two.py         Chronos-2 covariate-aware wrapper
+  timesfm_wrappers.py    TimesFM 2.5 target-only and XReg wrappers
+  moirai.py              Optional MOIRAI target-only wrapper via Uni2TS/GluonTS
+  walkforward.py         Expanding-window OOS driver
+  metrics.py             Accuracy and portfolio metrics
+  report.py, plots.py    Result tables and plots
+  report_notebook.py     Notebook display helpers for the generated report
+  system_info.py         Runtime environment capture for the report
+configs/                 Benchmark YAML configs
+scripts/reproduce.py     End-to-end reproduction driver
+notebooks/report.ipynb   Audience-facing report source
+docs/index.html          GitHub Pages report output
+tests/                   Unit and leakage tests
+```
+
+## Forecast Protocol
+
+For each out-of-sample date, the model predicts next trading-day excess return
+using information available after market close on the `asof` date. The realized
+return is `excess_ret[t+1]`. The benchmark reports:
+
+- `r2_oos`: pooled out-of-sample R2 against a zero-return forecast
+- `mae`, `rmse`
+- `dir_acc`, `f1`
+- Long-short decile portfolio annualized return, volatility, Sharpe, and drawdown
+- Latency percentiles and throughput for latency-enabled runs
+
+## Data Sources
+
+| Source | Use | Notes |
+| --- | --- | --- |
+| WRDS CRSP/Compustat/Fama-French | Canonical daily benchmark | Required for final reproduction |
+| WRDS TAQ | Intraday 1m/1s latency extension | Required for short-horizon institutional run |
+| Fama-French 25 portfolios | Public sanity benchmark | No WRDS credentials required |
+| yfinance | Smoke/exploratory runs | Survivorship-biased current S&P 500 membership |
+| Synthetic intraday | Tests and timing smoke | Not used for final empirical claims |
+
+## Tests
+
+```powershell
+python -m pytest
+```
+
+The normal test suite uses small fixtures and fake model objects. It should not
+download model weights or connect to WRDS. Full WRDS/model runs are manual,
+slow integration checks driven by `scripts/reproduce.py`.
+
+Useful focused checks:
+
+```powershell
+python -m pytest tests/test_model_registry.py tests/test_wrds_panel.py tests/test_timesfm_wrappers.py tests/test_chronos_moirai_wrappers.py
+python -m bench.run --config configs/wrds_smoke.yaml --no-plots
+```
+
+## AI Usage
+
+See [AI_USAGE.md](AI_USAGE.md).

@@ -28,6 +28,7 @@ import numpy as np
 import pandas as pd
 
 from .protocols import Forecaster, Panel
+from .markdown import dataframe_to_markdown
 
 
 def _torch_sync() -> None:
@@ -110,7 +111,7 @@ def write_report(lat_df: pd.DataFrame, out_dir: Path) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     lat_df.to_csv(out_dir / "latency.csv")
     with (out_dir / "latency.md").open("w") as f:
-        f.write(lat_df.to_markdown(floatfmt=".4f"))
+        f.write(dataframe_to_markdown(lat_df, floatfmt=".4f"))
         f.write("\n")
 
 

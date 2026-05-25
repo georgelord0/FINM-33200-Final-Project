@@ -2,7 +2,7 @@ __pycache__/
 *.pyc
 .pytest_cache/
 data_cache/
-results/
+data/
 src/data/
 cache/
 *.parquet
@@ -11,3 +11,11 @@ cache/
 .DS_Store
 .env
 .claude
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.jupyter/
+.cache/
+*.egg-info/
+hf_cache/
+model_cache/

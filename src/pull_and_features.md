@@ -7,8 +7,7 @@ Data pipeline for benchmarking multivariate Time Series Foundation Models (TSFMs
 ### 1. Install dependencies
 
 ```bash
-cd src
-pip install -e .
+pip install -e ".[models,report,dev]"
 # or
 pip install -r requirements.txt
 ```
@@ -27,6 +26,13 @@ Edit `.env`:
 WRDS_USERNAME=your_username
 WRDS_PASSWORD=your_password
 DATA_DIR=./data
+```
+
+`scripts/reproduce.py` waits for WRDS Duo/MFA by default. Start the auth
+preflight and approve the push if one appears:
+
+```bash
+python scripts/reproduce.py --stage auth --auth-timeout 600 --auth-interval 10
 ```
 
 Alternatively, set up WRDS via `pgpass` (one-time):
@@ -230,9 +236,16 @@ python -m src.datasets.build_multivariate_dataset \
     --val-end 2020-12-31
 ```
 
-## Stage 4: Model Training
+## Stage 4: Benchmark Evaluation
 
-Not yet implemented. The pipeline produces research-ready datasets for TSFM ingestion.
+The `src` pipeline produces the canonical WRDS daily panel. Benchmark
+evaluation is implemented in `bench/` and can consume the panel via the
+`wrds_panel` data source:
+
+```bash
+python -m bench.run --config configs/wrds_daily_2022_full.yaml
+python -m bench.run --config configs/wrds_daily_2023_full.yaml
+```
 
 ---
 

@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "finm33200-tsfm-benchmark"
+version = "0.1.0"
+description = "WRDS-backed benchmark of time-series foundation models for equity return forecasting"
+requires-python = ">=3.11"
+readme = "README.md"
+dependencies = [
+    "numpy",
+    "pandas",
+    "pyarrow",
+    "pyyaml",
+    "scikit-learn",
+    "lightgbm",
+    "catboost",
+    "matplotlib",
+    "yfinance",
+    "lxml",
+    "python-dotenv",
+    "wrds",
+    "pydantic",
+    "tqdm",
+    "loguru",
+]
+
+[project.optional-dependencies]
+models = [
+    "torch>=2.9",
+    "chronos-forecasting>=2.2",
+    "timesfm @ git+https://github.com/google-research/timesfm.git",
+    "jax==0.6.1",
+    "jaxlib==0.6.1",
+]
+moirai = [
+    "uni2ts",
+    "gluonts",
+]
+report = [
+    "jupyter",
+    "nbconvert",
+    "nbformat",
+]
+dev = [
+    "pytest",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["bench*", "src*"]
+namespaces = true

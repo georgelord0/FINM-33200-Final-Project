@@ -6,7 +6,9 @@ data:
 
 models: [zero, mean, ridge, lightgbm, catboost,
          chronos-bolt-21, chronos-bolt-252,
-         chronos-2-21, chronos-2-252]
+         chronos-2-21, chronos-2-252,
+         timesfm-2.5-21, timesfm-2.5-252,
+         timesfm-2.5-xreg-21, timesfm-2.5-xreg-252]
 oos_year: 2023
 horizon: 1
 output_dir: ./results/ff25_2023

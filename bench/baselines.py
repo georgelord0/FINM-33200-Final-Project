@@ -7,10 +7,8 @@ stateless sanity baselines. Zero exists so the harness can prove it
 doesn't lie (R^2_oos must equal 0 by construction).
 """
 
-import lightgbm as lgb
 import pandas as pd
-from catboost import CatBoostRegressor
-from sklearn.linear_model import Ridge as SKRidge
+import numpy as np
 
 from .protocols import Panel
 
@@ -27,7 +25,7 @@ def _aligned_xy(panel: Panel, train_end: pd.Timestamp, horizon: int):
         raise ValueError("ridge/lightgbm/catboost baselines require covariates")
     target = panel.returns.shift(-horizon).stack().rename("target")
     target.index.names = ["date", "asset_id"]
-    df = panel.covariates.join(target, how="inner").dropna()
+    df = panel.covariates.join(target, how="inner")
 
     idx = panel.returns.index
     cutoff_pos = idx.searchsorted(train_end, side="right") - horizon - 1
@@ -35,7 +33,11 @@ def _aligned_xy(panel: Panel, train_end: pd.Timestamp, horizon: int):
         df = df.iloc[:0]
     else:
         df = df[df.index.get_level_values("date") <= idx[cutoff_pos]]
-    return df.drop(columns=["target"]), df["target"]
+
+    df = df[df["target"].notna()]
+    x = df.drop(columns=["target"]).replace([np.inf, -np.inf], np.nan).fillna(0.0)
+    y = df["target"]
+    return x, y
 
 
 def _features_at(panel: Panel, asof: pd.Timestamp) -> pd.DataFrame | None:
@@ -72,6 +74,13 @@ class Ridge:
     name = "ridge"
 
     def __init__(self, alpha: float = 1.0) -> None:
+        try:
+            from sklearn.linear_model import Ridge as SKRidge
+        except ImportError as e:
+            raise ImportError(
+                "ridge baseline requires scikit-learn. Install with "
+                "`pip install -r requirements.txt`."
+            ) from e
         self._model = SKRidge(alpha=alpha)
         self._cols: list[str] | None = None
 
@@ -96,12 +105,19 @@ class LightGBM:
                  num_leaves: int = 31) -> None:
         self._params = dict(n_estimators=n_estimators, learning_rate=learning_rate,
                             num_leaves=num_leaves, verbose=-1)
-        self._model: lgb.LGBMRegressor | None = None
+        self._model = None
         self._cols: list[str] | None = None
 
     def fit(self, panel: Panel, train_end: pd.Timestamp) -> None:
         x, y = _aligned_xy(panel, train_end, horizon=1)
         self._cols = list(x.columns)
+        try:
+            import lightgbm as lgb
+        except ImportError as e:
+            raise ImportError(
+                "lightgbm baseline requires lightgbm. Install with "
+                "`pip install -r requirements.txt`."
+            ) from e
         self._model = lgb.LGBMRegressor(**self._params)
         self._model.fit(x, y)
 
@@ -121,12 +137,19 @@ class CatBoost:
                  depth: int = 6) -> None:
         self._params = dict(iterations=iterations, learning_rate=learning_rate,
                             depth=depth, verbose=False, allow_writing_files=False)
-        self._model: CatBoostRegressor | None = None
+        self._model = None
         self._cols: list[str] | None = None
 
     def fit(self, panel: Panel, train_end: pd.Timestamp) -> None:
         x, y = _aligned_xy(panel, train_end, horizon=1)
         self._cols = list(x.columns)
+        try:
+            from catboost import CatBoostRegressor
+        except ImportError as e:
+            raise ImportError(
+                "catboost baseline requires catboost. Install with "
+                "`pip install -r requirements.txt`."
+            ) from e
         self._model = CatBoostRegressor(**self._params)
         self._model.fit(x, y)
 

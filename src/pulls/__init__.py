@@ -1,22 +1,29 @@
-"""Data pull modules for WRDS datasets."""
+"""Data pull modules for WRDS datasets.
 
-from src.pulls.pull_crsp import pull as pull_crsp
-from src.pulls.pull_compustat import pull as pull_compustat
-from src.pulls.pull_linking import pull as pull_linking
-from src.pulls.pull_linking import merge_crsp_compustat
-from src.pulls.pull_riskfree import pull as pull_riskfree
+Imports are lazy so `python -m src.pulls.<module>` does not pre-import the
+target module before runpy executes it.
+"""
 
-from src.pulls.pull_factors import pull as pull_factors
-from src.pulls.pull_macro import pull as pull_macro
-from src.pulls.pull_ibes import pull as pull_ibes
+from __future__ import annotations
 
-__all__ = [
-    "pull_crsp",
-    "pull_compustat",
-    "pull_linking",
-    "pull_riskfree",
-    "merge_crsp_compustat",
-    "pull_factors",
-    "pull_macro",
-    "pull_ibes",
-]
+from importlib import import_module
+
+_EXPORTS = {
+    "pull_crsp": ("src.pulls.pull_crsp", "pull"),
+    "pull_compustat": ("src.pulls.pull_compustat", "pull"),
+    "pull_linking": ("src.pulls.pull_linking", "pull"),
+    "merge_crsp_compustat": ("src.pulls.pull_linking", "merge_crsp_compustat"),
+    "pull_riskfree": ("src.pulls.pull_riskfree", "pull"),
+    "pull_factors": ("src.pulls.pull_factors", "pull"),
+    "pull_macro": ("src.pulls.pull_macro", "pull"),
+    "pull_ibes": ("src.pulls.pull_ibes", "pull"),
+}
+
+__all__ = list(_EXPORTS)
+
+
+def __getattr__(name: str):
+    if name not in _EXPORTS:
+        raise AttributeError(name)
+    module_name, attr = _EXPORTS[name]
+    return getattr(import_module(module_name), attr)

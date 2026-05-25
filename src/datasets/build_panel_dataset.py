@@ -132,24 +132,26 @@ def _load_config(config_path: str | None) -> dict:
     """
     root = _project_root()
 
+    def _resolve_paths(cfg: dict, base: Path) -> dict:
+        for key in ("features_dir", "crsp_dir", "riskfree_dir", "datasets_dir"):
+            if key in cfg and not Path(cfg[key]).is_absolute():
+                cfg[key] = str(base / cfg[key])
+        return cfg
+
     if config_path is not None:
         with open(config_path) as fh:
             cfg = yaml.safe_load(fh)
-        # Resolve relative paths against project root
-        for key in ("features_dir", "crsp_dir", "riskfree_dir", "datasets_dir"):
-            if key in cfg and not Path(cfg[key]).is_absolute():
-                cfg[key] = str(root / cfg[key])
-        return cfg
+        # Explicit configs resolve against project root.
+        return _resolve_paths(cfg, root)
 
     # Default: load from paths.yaml
     paths_yaml = root / "src" / "configs" / "paths.yaml"
     if paths_yaml.exists():
         with open(paths_yaml) as fh:
             cfg = yaml.safe_load(fh)
-        for key in cfg:
-            if not Path(cfg[key]).is_absolute():
-                cfg[key] = str(root / cfg[key])
-        return cfg
+        # The src pipeline writes under src/data by default; keep the default
+        # panel builder aligned with the pull and feature modules.
+        return _resolve_paths(cfg, root / "src")
 
     # Fallback hard-coded defaults
     return {
@@ -166,7 +168,7 @@ def _load_config(config_path: str | None) -> dict:
 
 
 def _load_parquets(directory: Path, label: str) -> pd.DataFrame:
-    """Read and concatenate all ``.parquet`` files in *directory*.
+    """Read parquet files from a flat or partitioned directory.
 
     Parameters
     ----------
@@ -190,16 +192,126 @@ def _load_parquets(directory: Path, label: str) -> pd.DataFrame:
         raise FileNotFoundError(f"{label} directory does not exist: {directory}")
 
     files = sorted(directory.glob("*.parquet"))
-    if not files:
+    if files:
+        frames: list[pd.DataFrame] = []
+        for f in tqdm(files, desc=f"Loading {label}", leave=False):
+            frames.append(pd.read_parquet(f))
+
+        df = pd.concat(frames, ignore_index=True)
+        log.info("Loaded {} rows from {} ({} files)", len(df), label, len(files))
+        return df
+
+    partition_files = sorted(directory.rglob("*.parquet"))
+    if partition_files:
+        df = pd.read_parquet(directory)
+        log.info(
+            "Loaded {} rows from {} partitioned parquet files in {}",
+            len(df),
+            len(partition_files),
+            label,
+        )
+        return df
+
+    if not partition_files:
         raise FileNotFoundError(f"No parquet files found in {directory} ({label})")
 
-    frames: list[pd.DataFrame] = []
-    for f in tqdm(files, desc=f"Loading {label}", leave=False):
-        frames.append(pd.read_parquet(f))
+    raise AssertionError("unreachable")
 
-    df = pd.concat(frames, ignore_index=True)
-    log.info("Loaded {} rows from {} ({} files)", len(df), label, len(files))
-    return df
+
+_FEATURE_FILE_EXCLUDES = {"targets.parquet"}
+_UNSAFE_FEATURE_COLUMNS = {
+    COL_RET,
+    "retx",
+    COL_PRC,
+    "adj_prc",
+    "vol",
+    COL_SHROUT,
+    "cfacpr",
+    "cfacshr",
+    "siccd",
+    "exchcd",
+    "shrcd",
+    COL_MARKET_CAP,
+    "target_ret",
+    "excess_ret",
+    "direction",
+    "year",
+}
+
+
+def _load_feature_files(features_dir: Path) -> pd.DataFrame:
+    """Load engineered features and merge feature families by key.
+
+    Feature files keyed by ``(date, permno)`` are merged horizontally. Macro
+    files keyed only by ``date`` are merged afterward and broadcast by date.
+    Files containing model targets/raw labels are excluded.
+    """
+    features_dir = Path(features_dir)
+    if not features_dir.exists():
+        raise FileNotFoundError(f"Features directory does not exist: {features_dir}")
+
+    files = sorted(
+        p for p in features_dir.glob("*.parquet")
+        if p.name not in _FEATURE_FILE_EXCLUDES
+    )
+    if not files:
+        raise FileNotFoundError(f"No feature parquet files found in {features_dir}")
+
+    asset_features: pd.DataFrame | None = None
+    date_features: list[pd.DataFrame] = []
+
+    for path in tqdm(files, desc="Loading Features", leave=False):
+        df = pd.read_parquet(path)
+        if df.empty:
+            log.warning("Skipping empty feature file {}", path.name)
+            continue
+        if COL_DATE not in df.columns:
+            log.warning("Skipping feature file without date column: {}", path.name)
+            continue
+
+        df[COL_DATE] = pd.to_datetime(df[COL_DATE])
+        keys = [COL_DATE]
+        if COL_PERMNO in df.columns:
+            df[COL_PERMNO] = df[COL_PERMNO].astype(int)
+            keys.append(COL_PERMNO)
+
+        drop_cols = [
+            c for c in df.columns
+            if c not in keys and c in _UNSAFE_FEATURE_COLUMNS
+        ]
+        if drop_cols:
+            log.warning("Dropping unsafe columns from {}: {}", path.name, drop_cols)
+            df = df.drop(columns=drop_cols)
+
+        df = df.sort_values(keys).drop_duplicates(keys, keep="last")
+
+        if COL_PERMNO in keys:
+            if asset_features is None:
+                asset_features = df
+            else:
+                asset_features = asset_features.merge(
+                    df,
+                    on=[COL_DATE, COL_PERMNO],
+                    how="outer",
+                    validate="one_to_one",
+                )
+        else:
+            date_features.append(df)
+
+        log.info("Loaded feature file {}: {} rows, {} columns", path.name, len(df), len(df.columns))
+
+    if asset_features is None:
+        raise ValueError(f"No asset-level feature files found in {features_dir}")
+
+    for df in date_features:
+        asset_features = asset_features.merge(df, on=COL_DATE, how="left", validate="many_to_one")
+
+    log.info(
+        "Merged engineered features: {} rows, {} columns",
+        len(asset_features),
+        len(asset_features.columns),
+    )
+    return asset_features
 
 
 # ---------------------------------------------------------------------------
@@ -246,9 +358,7 @@ def build_panel(config_path: str | None = None) -> pd.DataFrame:
     rf[COL_DATE] = pd.to_datetime(rf[COL_DATE])
 
     log.info("Loading engineered features ...")
-    features = _load_parquets(features_dir, "Features")
-    features[COL_DATE] = pd.to_datetime(features[COL_DATE])
-    features[COL_PERMNO] = features[COL_PERMNO].astype(int)
+    features = _load_feature_files(features_dir)
 
     # ------------------------------------------------------------------
     # 2. Compute market cap (if not already present)
@@ -342,13 +452,15 @@ def build_panel(config_path: str | None = None) -> pd.DataFrame:
     # ------------------------------------------------------------------
     # target_ret is forward-looking by construction (shift(-1) above).
     # Verify: for each permno group, target_ret[t] == ret[t+1].
+    def _target_is_shifted(g: pd.DataFrame) -> bool:
+        if len(g) <= 1:
+            return True
+        actual = g["target_ret"].iloc[:-1].reset_index(drop=True)
+        expected = g[COL_RET].iloc[1:].reset_index(drop=True)
+        return bool(actual.equals(expected))
+
     _sample = panel.groupby(COL_PERMNO).head(10)
-    _check = _sample.groupby(COL_PERMNO).apply(
-        lambda g: (g["target_ret"].iloc[:-1].values == g[COL_RET].iloc[1:].values).all()
-        if len(g) > 1
-        else True,
-        include_groups=False,
-    )
+    _check = _sample.groupby(COL_PERMNO).apply(_target_is_shifted)
     assert _check.all(), "Leakage check failed: target_ret is not correctly shifted"
     log.info("Leakage assertion passed: target_ret is forward-looking")
 

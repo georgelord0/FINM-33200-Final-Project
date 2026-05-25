@@ -1,0 +1,74 @@
+{
+  "collected_at_utc": "2026-05-25T03:57:37+00:00",
+  "cpu": {
+    "brand": "Intel(R) Core(TM) i7-14700K",
+    "logical_cores": 28,
+    "physical_cores": 20,
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel"
+  },
+  "gpu": {
+    "nvidia_smi": [
+      {
+        "architecture": "Blackwell",
+        "compute_capability": "12.0",
+        "display_name": "RTX 5080",
+        "driver_version": "591.86",
+        "memory_total_gb": 15.92,
+        "memory_total_mb": 16303,
+        "name": "NVIDIA GeForce RTX 5080"
+      }
+    ],
+    "torch": {
+      "arch_list": [
+        "sm_75",
+        "sm_80",
+        "sm_86",
+        "sm_90",
+        "sm_100",
+        "sm_120"
+      ],
+      "available": true,
+      "compiled_cuda": "13.0",
+      "cuda_available": true,
+      "device_count": 1,
+      "devices": [
+        {
+          "architecture": "Blackwell",
+          "compute_capability": "12.0",
+          "display_name": "RTX 5080",
+          "index": 0,
+          "memory_total_gb": 15.92,
+          "name": "NVIDIA GeForce RTX 5080"
+        }
+      ],
+      "version": "2.9.1+cu130"
+    }
+  },
+  "memory": {
+    "total_gb": 63.77
+  },
+  "os": {
+    "machine": "AMD64",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "release": "11",
+    "system": "Windows",
+    "version": "10.0.26200"
+  },
+  "packages": {
+    "catboost": "1.2.7",
+    "chronos-forecasting": "2.2.2",
+    "jax": "0.6.1",
+    "jaxlib": "0.6.1",
+    "lightgbm": "4.6.0",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.8.0",
+    "timesfm": "2.0.0",
+    "torch": "2.9.1+cu130"
+  },
+  "python": {
+    "executable_name": "python.exe",
+    "implementation": "CPython",
+    "version": "3.12.10"
+  }
+}

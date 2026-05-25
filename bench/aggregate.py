@@ -13,6 +13,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from .markdown import dataframe_to_markdown
+
 METRICS = ["r2_oos", "dir_acc", "sharpe", "ann_return", "max_dd"]
 
 
@@ -37,7 +39,7 @@ def main() -> None:
         parsed[label] = Path(path)
 
     table = combine(parsed)
-    md = table.to_markdown(floatfmt=".4f")
+    md = dataframe_to_markdown(table, floatfmt=".4f")
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(md + "\n")

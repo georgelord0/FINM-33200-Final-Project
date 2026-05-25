@@ -113,11 +113,8 @@ def build_log_returns(prices: pd.DataFrame) -> pd.DataFrame:
         within each permno group.
     """
     df = prices.sort_values([COL_PERMNO, COL_DATE]).reset_index(drop=True)
-    log_price = np.log(df[COL_PRC].abs())
     result = pd.DataFrame(index=df.index)
-    result["log_ret"] = df.groupby(COL_PERMNO).apply(
-        lambda g: np.log(g[COL_PRC].abs()).diff(), include_groups=False
-    ).droplevel(0).sort_index()
+    result["log_ret"] = np.log(df[COL_PRC].abs()).groupby(df[COL_PERMNO]).diff()
 
     log.info("Built log returns for {} rows", len(result))
     return result

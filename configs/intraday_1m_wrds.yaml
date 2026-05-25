@@ -29,6 +29,12 @@ models:
   - lightgbm
   - chronos-bolt-60-cpu     # 1-hour context
   - chronos-bolt-252-cpu    # ~4-hour context (paper anchor length)
+  - chronos-2-60-cpu        # covariate-aware Chronos, 1-hour context
+  - chronos-2-252-cpu       # covariate-aware Chronos, ~4-hour context
+  - timesfm-2.5-60          # TimesFM target-only, 1-hour context
+  - timesfm-2.5-252         # TimesFM target-only, ~4-hour context
+  - timesfm-2.5-xreg-60     # TimesFM XReg with intraday covariates
+  - timesfm-2.5-xreg-252    # TimesFM XReg with intraday covariates
 
 horizon: 1
 train_end: "2025-01-30 16:00:00"   # ET — end of Thu

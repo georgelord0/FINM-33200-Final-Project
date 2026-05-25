@@ -1,0 +1,2 @@
+model,r2_oos,mae,rmse,dir_acc,f1,ann_return,ann_vol,sharpe,max_dd,max_dd_1d,n_obs,n_dates
+timesfm-2.5-252,0.0759450371179875,0.014932567740167674,0.018303772283697162,0.5,0.3333333333333333,,,,,,10,5

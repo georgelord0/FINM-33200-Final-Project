@@ -21,6 +21,24 @@ log = get_logger(__name__)
 # Pure feature functions
 # ---------------------------------------------------------------------------
 
+_MACRO_FEATURE_COLUMNS = [
+    "term_spread",
+    "inflation_change",
+    "unemployment_change",
+    "high_vix",
+    "inverted_yield_curve",
+    "rising_unemployment",
+    "high_inflation",
+]
+
+
+def _empty_macro_features() -> pd.DataFrame:
+    cols: dict[str, pd.Series] = {
+        COL_DATE: pd.Series(dtype="datetime64[ns]"),
+    }
+    cols.update({col: pd.Series(dtype="float64") for col in _MACRO_FEATURE_COLUMNS})
+    return pd.DataFrame(cols)
+
 
 def build_yield_spread(macro: pd.DataFrame) -> pd.DataFrame:
     """Compute the term spread (10Y Treasury minus 3M T-bill).
@@ -182,14 +200,18 @@ def build() -> pd.DataFrame:
     macro = pd.read_parquet(macro_path)
     macro = macro.sort_values(COL_DATE).reset_index(drop=True)
 
-    spread = build_yield_spread(macro)
-    inflation = build_inflation_change(macro)
-    unemp = build_unemployment_change(macro)
-    regime = build_macro_regime(macro)
+    if macro.empty:
+        log.warning("Macro data is empty; writing empty macro feature file")
+        features = _empty_macro_features()
+    else:
+        spread = build_yield_spread(macro)
+        inflation = build_inflation_change(macro)
+        unemp = build_unemployment_change(macro)
+        regime = build_macro_regime(macro)
 
-    features = spread
-    for feat_df in [inflation, unemp, regime]:
-        features = features.merge(feat_df, on=COL_DATE, how="outer")
+        features = spread
+        for feat_df in [inflation, unemp, regime]:
+            features = features.merge(feat_df, on=COL_DATE, how="outer")
 
     out_path = DATA_DIR / "features" / "macro_features.parquet"
     out_path.parent.mkdir(parents=True, exist_ok=True)

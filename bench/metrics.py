@@ -61,7 +61,7 @@ def long_short_returns(df: pd.DataFrame, n_deciles: int = 10) -> pd.Series:
         bot = ranks <= len(group) / n_deciles
         return group.loc[top, "realized"].mean() - group.loc[bot, "realized"].mean()
 
-    return df.groupby("date", group_keys=False).apply(ls, include_groups=False).dropna()
+    return df.groupby("date", group_keys=False).apply(ls).dropna()
 
 
 def portfolio_stats(ls: pd.Series, bars_per_year: int = TRADING_DAYS) -> dict[str, float]:

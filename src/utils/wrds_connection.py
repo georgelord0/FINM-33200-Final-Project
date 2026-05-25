@@ -15,13 +15,10 @@ Typical usage
 
 from __future__ import annotations
 
-import functools
 import os
-import time
-from typing import Any, Callable, TypeVar
+from typing import Any
 
 import pandas as pd
-import wrds
 from dotenv import load_dotenv
 
 from src.utils.logging_utils import get_logger
@@ -30,65 +27,6 @@ log = get_logger(__name__)
 
 # Load .env at import time so credentials are available early.
 load_dotenv()
-
-F = TypeVar("F", bound=Callable[..., Any])
-
-# ---------------------------------------------------------------------------
-# Retry decorator
-# ---------------------------------------------------------------------------
-
-
-def retry(
-    max_retries: int = 3,
-    backoff_base: float = 2.0,
-    initial_wait: float = 1.0,
-) -> Callable[[F], F]:
-    """Decorator that retries a function on exception with exponential backoff.
-
-    Parameters
-    ----------
-    max_retries:
-        Maximum number of attempts (including the initial call).
-    backoff_base:
-        Multiplier for successive wait times.
-    initial_wait:
-        Seconds to wait after the first failure.
-    """
-
-    def decorator(func: F) -> F:
-        @functools.wraps(func)
-        def wrapper(*args: Any, **kwargs: Any) -> Any:
-            wait = initial_wait
-            last_exc: Exception | None = None
-            for attempt in range(1, max_retries + 1):
-                try:
-                    return func(*args, **kwargs)
-                except Exception as exc:
-                    last_exc = exc
-                    if attempt == max_retries:
-                        log.error(
-                            "{}() failed after {} attempts: {}",
-                            func.__name__,
-                            max_retries,
-                            exc,
-                        )
-                        raise
-                    log.warning(
-                        "{}() attempt {}/{} failed ({}). Retrying in {:.1f}s ...",
-                        func.__name__,
-                        attempt,
-                        max_retries,
-                        exc,
-                        wait,
-                    )
-                    time.sleep(wait)
-                    wait *= backoff_base
-            # Should not reach here, but satisfy type checker.
-            raise last_exc  # type: ignore[misc]
-
-        return wrapper  # type: ignore[return-value]
-
-    return decorator
 
 
 # ---------------------------------------------------------------------------
@@ -110,25 +48,45 @@ class WRDSConnection:
         WRDS username.  Defaults to the ``WRDS_USERNAME`` environment variable.
     """
 
-    def __init__(self, username: str | None = None) -> None:
+    def __init__(self, username: str | None = None, password: str | None = None) -> None:
         self._username: str = username or os.environ.get("WRDS_USERNAME", "")
+        self._password: str = password or os.environ.get("WRDS_PASSWORD", "")
         if not self._username:
             raise EnvironmentError(
                 "WRDS_USERNAME not set.  Add it to your .env file or pass it explicitly."
             )
-        self._conn: wrds.Connection | None = None
+        if not self._password:
+            raise EnvironmentError(
+                "WRDS_PASSWORD not set. Add it to your .env file or pass it explicitly. "
+                "If you prefer pgpass/keyring, use the wrds package setup outside "
+                "scripts/reproduce.py."
+            )
+        self._conn: Any | None = None
         log.info("WRDSConnection created for user '{}'", self._username)
 
     # -- connection lifecycle ------------------------------------------------
 
-    def _connect(self) -> wrds.Connection:
+    def _connect(self) -> Any:
         """Establish (or re-establish) the underlying WRDS connection."""
         log.info("Connecting to WRDS as '{}' ...", self._username)
-        conn = wrds.Connection(wrds_username=self._username)
+        try:
+            import wrds
+        except ImportError as e:
+            raise ImportError(
+                "wrds package not installed. Install dependencies with "
+                "`python -m pip install -r requirements.txt`."
+            ) from e
+        try:
+            conn = wrds.Connection(
+                wrds_username=self._username,
+                wrds_password=self._password,
+            )
+        except Exception as exc:
+            raise RuntimeError(_wrds_auth_message(exc)) from exc
         log.info("WRDS connection established.")
         return conn
 
-    def _ensure_alive(self) -> wrds.Connection:
+    def _ensure_alive(self) -> Any:
         """Return a live connection, reconnecting if the existing one is stale."""
         if self._conn is None:
             self._conn = self._connect()
@@ -169,7 +127,6 @@ class WRDSConnection:
 
     # -- query methods -------------------------------------------------------
 
-    @retry(max_retries=3, backoff_base=2.0, initial_wait=1.0)
     def query(
         self,
         sql: str,
@@ -193,10 +150,16 @@ class WRDSConnection:
         pd.DataFrame
             Query results.
         """
-        conn = self._ensure_alive()
-        log.debug("Executing query ({} chars): {}...", len(sql), sql[:120])
-
-        df: pd.DataFrame = conn.raw_sql(sql, params=params, date_cols=date_cols)
+        try:
+            conn = self._ensure_alive()
+            log.debug("Executing query ({} chars): {}...", len(sql), sql[:120])
+            df: pd.DataFrame = conn.raw_sql(sql, params=params, date_cols=date_cols)
+        except RuntimeError:
+            raise
+        except Exception as exc:
+            if _looks_like_auth_error(exc):
+                raise RuntimeError(_wrds_auth_message(exc)) from exc
+            raise
 
         log.info("Query returned {} rows, {} columns.", len(df), len(df.columns))
         return df
@@ -267,7 +230,7 @@ class WRDSConnection:
 # ---------------------------------------------------------------------------
 
 
-def get_connection(username: str | None = None) -> WRDSConnection:
+def get_connection(username: str | None = None, password: str | None = None) -> WRDSConnection:
     """Return the module-level singleton :class:`WRDSConnection`.
 
     On the first call the connection object is created (but the actual TCP
@@ -278,6 +241,8 @@ def get_connection(username: str | None = None) -> WRDSConnection:
     ----------
     username:
         Override WRDS username.  Only used on the first call.
+    password:
+        Override WRDS password.  Only used on the first call.
 
     Returns
     -------
@@ -287,7 +252,29 @@ def get_connection(username: str | None = None) -> WRDSConnection:
     global _instance  # noqa: PLW0603
 
     if _instance is None:
-        _instance = WRDSConnection(username=username)
+        _instance = WRDSConnection(username=username, password=password)
         log.info("Singleton WRDSConnection initialised.")
 
     return _instance
+
+
+def _looks_like_auth_error(exc: Exception) -> bool:
+    text = str(exc).lower()
+    needles = (
+        "pam authentication failed",
+        "ldap authentication failed",
+        "password authentication failed",
+        "no password supplied",
+    )
+    return any(n in text for n in needles)
+
+
+def _wrds_auth_message(exc: Exception) -> str:
+    detail = str(exc).strip()
+    return (
+        "WRDS authentication failed. scripts/reproduce.py uses WRDS_USERNAME "
+        "and WRDS_PASSWORD from .env. If a Duo push appears, approve it while "
+        "scripts/reproduce.py keeps polling. Also verify the password in .env "
+        "is your normal WRDS password.\n\n"
+        f"Original WRDS error: {detail}"
+    )

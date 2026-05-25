@@ -1,0 +1,25 @@
+data:
+  source: wrds_panel
+  panel_path: ./src/data/datasets/panel.parquet
+  start: "2015-01-01"
+  end: "2023-12-31"
+  oos_year: 2023
+  top_n_by_mcap: 100
+  min_history_days: 1000
+  feature_set: core
+
+models:
+  - zero
+  - mean
+  - ridge
+  - lightgbm
+  - catboost
+  - chronos-bolt-252-cuda
+  - chronos-2-252-cuda
+  - timesfm-2.5-252
+  - timesfm-2.5-xreg-252
+
+oos_year: 2023
+horizon: 1
+bars_per_year: 252
+output_dir: ./results/wrds_daily_2023_full

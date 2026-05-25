@@ -68,9 +68,6 @@ def build_momentum(returns: pd.DataFrame) -> pd.DataFrame:
 
     # Standard momentum windows
     for col_name, window in _MOM_WINDOWS.items():
-        rolling_sum = grouped.transform(
-            lambda x, w=window: x.rolling(window=w, min_periods=w).sum()
-        )
         df[col_name] = df.groupby(COL_PERMNO)[COL_RET].transform(
             lambda x, w=window: x.rolling(window=w, min_periods=w).sum()
         )
@@ -92,12 +89,8 @@ def build_momentum(returns: pd.DataFrame) -> pd.DataFrame:
         lambda x: x.rolling(window=21, min_periods=21).sum()
     )
     df["mom_12_1"] = (
-        df.groupby(COL_PERMNO).apply(
-            lambda g: rolling_12m.loc[g.index].shift(21), include_groups=False
-        ).droplevel(0).sort_index()
-        - df.groupby(COL_PERMNO).apply(
-            lambda g: rolling_1m.loc[g.index].shift(1), include_groups=False
-        ).droplevel(0).sort_index()
+        rolling_12m.groupby(df[COL_PERMNO]).shift(21)
+        - rolling_1m.groupby(df[COL_PERMNO]).shift(1)
     )
 
     feature_cols = list(_MOM_WINDOWS.keys()) + ["short_term_reversal", "mom_12_1"]

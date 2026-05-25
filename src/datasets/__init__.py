@@ -1,17 +1,22 @@
 """Dataset construction modules for the src pipeline."""
 
-from src.datasets.build_multivariate_dataset import (
-    build_multivariate,
-    load_dataset,
-    save_dataset,
-    split_by_date,
-)
-from src.datasets.build_panel_dataset import build_panel
+from __future__ import annotations
 
-__all__ = [
-    "build_panel",
-    "build_multivariate",
-    "split_by_date",
-    "save_dataset",
-    "load_dataset",
-]
+from importlib import import_module
+
+_EXPORTS = {
+    "build_panel": ("src.datasets.build_panel_dataset", "build_panel"),
+    "build_multivariate": ("src.datasets.build_multivariate_dataset", "build_multivariate"),
+    "split_by_date": ("src.datasets.build_multivariate_dataset", "split_by_date"),
+    "save_dataset": ("src.datasets.build_multivariate_dataset", "save_dataset"),
+    "load_dataset": ("src.datasets.build_multivariate_dataset", "load_dataset"),
+}
+
+__all__ = list(_EXPORTS)
+
+
+def __getattr__(name: str):
+    if name not in _EXPORTS:
+        raise AttributeError(name)
+    module_name, attr = _EXPORTS[name]
+    return getattr(import_module(module_name), attr)

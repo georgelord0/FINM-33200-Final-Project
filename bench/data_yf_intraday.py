@@ -60,6 +60,7 @@ def load_panel(
     close = close.sort_index().dropna(axis=1, how="all")
     vol = vol.reindex_like(close)
 
-    returns = np.log(close).diff().clip(-1.0, 1.0).iloc[1:]
+    # ±10% per bar — see data_wrds.py for why ±1 was too loose
+    returns = np.log(close).diff().clip(-0.10, 0.10).iloc[1:]
     covariates = build_intraday_covariates(returns, vol.loc[returns.index], **(covariate_kwargs or {}))
     return Panel(returns=returns, covariates=covariates, freq=interval)

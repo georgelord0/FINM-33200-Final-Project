@@ -125,7 +125,8 @@ def load_panel(
     # convention is "last-known price" — a missing bar means flat return.
     close = close.ffill()
     returns = np.log(close).diff()
-    returns = returns.clip(-1.0, 1.0)
+    # ±10% per bar — ±1 was letting stale quotes blow up the metrics
+    returns = returns.clip(-0.10, 0.10)
     returns = returns.iloc[1:]
     covariates = build_intraday_covariates(returns, vol.loc[returns.index], **(covariate_kwargs or {}))
     return Panel(returns=returns, covariates=covariates, freq=interval)

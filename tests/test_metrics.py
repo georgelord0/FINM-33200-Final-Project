@@ -17,6 +17,15 @@ def forecasts():
     })
 
 
+def test_portfolio_stats_survives_full_wipeout_bar():
+    # bar <= -1 used to make cumprod go negative and max_dd nonsense
+    ls = pd.Series([0.01, -1.5, 0.02, -0.005, 0.01])
+    s = m.portfolio_stats(ls)
+    assert s["max_dd"] >= -1.0
+    assert s["max_dd_1d"] == pytest.approx(-1.5)
+    assert np.isfinite(s["sharpe"])
+
+
 def test_r2_oos_zero_forecast_is_zero():
     df = pd.DataFrame({
         "realized": np.random.default_rng(0).normal(size=100),

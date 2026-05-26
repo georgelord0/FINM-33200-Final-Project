@@ -2046,3 +2046,251 @@ mom_1m                   404341
 ret_lag_21               387017
 2026-05-24 22:42:08.598 | INFO     | __main__:build_panel:536 | Saved panel dataset to C:\Users\George\Documents\GitHub\FINM-33200-Final-Project\src\data\datasets\panel.parquet (35 year partitions)
 2026-05-24 22:42:08.952 | INFO     | __main__:<module>:561 | Done. Final panel shape: (41360070, 51)
+2026-05-25 19:41:30.487 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-25 19:41:30.487 | INFO     | __main__:pull:239 | Pulling CRSP data for 1990–2026
+2026-05-25 19:41:30.487 | INFO     | src.utils.wrds_connection:__init__:65 | WRDSConnection created for user 'georgelord'
+2026-05-25 19:41:30.487 | INFO     | src.utils.wrds_connection:get_connection:256 | Singleton WRDSConnection initialised.
+2026-05-25 19:41:30.488 | INFO     | __main__:pull:248 |   1990: loading from cache
+2026-05-25 19:41:30.718 | INFO     | __main__:pull:248 |   1991: loading from cache
+2026-05-25 19:41:30.748 | INFO     | __main__:pull:248 |   1992: loading from cache
+2026-05-25 19:41:30.779 | INFO     | __main__:pull:248 |   1993: loading from cache
+2026-05-25 19:41:30.811 | INFO     | __main__:pull:248 |   1994: loading from cache
+2026-05-25 19:41:30.845 | INFO     | __main__:pull:248 |   1995: loading from cache
+2026-05-25 19:41:30.888 | INFO     | __main__:pull:248 |   1996: loading from cache
+2026-05-25 19:41:30.927 | INFO     | __main__:pull:248 |   1997: loading from cache
+2026-05-25 19:41:30.969 | INFO     | __main__:pull:248 |   1998: loading from cache
+2026-05-25 19:41:31.010 | INFO     | __main__:pull:248 |   1999: loading from cache
+2026-05-25 19:41:31.049 | INFO     | __main__:pull:248 |   2000: loading from cache
+2026-05-25 19:41:31.087 | INFO     | __main__:pull:248 |   2001: loading from cache
+2026-05-25 19:41:31.125 | INFO     | __main__:pull:248 |   2002: loading from cache
+2026-05-25 19:41:31.162 | INFO     | __main__:pull:248 |   2003: loading from cache
+2026-05-25 19:41:31.197 | INFO     | __main__:pull:248 |   2004: loading from cache
+2026-05-25 19:41:31.231 | INFO     | __main__:pull:248 |   2005: loading from cache
+2026-05-25 19:41:31.265 | INFO     | __main__:pull:248 |   2006: loading from cache
+2026-05-25 19:41:31.302 | INFO     | __main__:pull:248 |   2007: loading from cache
+2026-05-25 19:41:31.336 | INFO     | __main__:pull:248 |   2008: loading from cache
+2026-05-25 19:41:31.373 | INFO     | __main__:pull:248 |   2009: loading from cache
+2026-05-25 19:41:31.405 | INFO     | __main__:pull:248 |   2010: loading from cache
+2026-05-25 19:41:31.437 | INFO     | __main__:pull:248 |   2011: loading from cache
+2026-05-25 19:41:31.468 | INFO     | __main__:pull:248 |   2012: loading from cache
+2026-05-25 19:41:31.497 | INFO     | __main__:pull:248 |   2013: loading from cache
+2026-05-25 19:41:31.527 | INFO     | __main__:pull:248 |   2014: loading from cache
+2026-05-25 19:41:31.557 | INFO     | __main__:pull:248 |   2015: loading from cache
+2026-05-25 19:41:31.588 | INFO     | __main__:pull:248 |   2016: loading from cache
+2026-05-25 19:41:31.617 | INFO     | __main__:pull:248 |   2017: loading from cache
+2026-05-25 19:41:31.647 | INFO     | __main__:pull:248 |   2018: loading from cache
+2026-05-25 19:41:31.675 | INFO     | __main__:pull:248 |   2019: loading from cache
+2026-05-25 19:41:31.706 | INFO     | __main__:pull:248 |   2020: loading from cache
+2026-05-25 19:41:31.736 | INFO     | __main__:pull:248 |   2021: loading from cache
+2026-05-25 19:41:31.771 | INFO     | __main__:pull:248 |   2022: loading from cache
+2026-05-25 19:41:31.806 | INFO     | __main__:pull:248 |   2023: loading from cache
+2026-05-25 19:41:31.839 | INFO     | __main__:pull:248 |   2024: loading from cache
+2026-05-25 19:41:31.873 | INFO     | __main__:pull:252 |   2025: querying WRDS …
+2026-05-25 19:41:31.873 | INFO     | src.utils.wrds_connection:_connect:71 | Connecting to WRDS as 'georgelord' ...
+2026-05-25 19:41:33.247 | INFO     | src.utils.wrds_connection:_connect:86 | WRDS connection established.
+2026-05-25 19:41:33.247 | DEBUG    | src.utils.wrds_connection:query:155 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-25 19:41:33.305 | INFO     | src.utils.wrds_connection:query:164 | Query returned 0 rows, 12 columns.
+2026-05-25 19:41:33.305 | WARNING  | __main__:pull:256 |   2025: no data returned, skipping
+2026-05-25 19:41:33.305 | INFO     | __main__:pull:252 |   2026: querying WRDS …
+2026-05-25 19:41:33.328 | DEBUG    | src.utils.wrds_connection:query:155 | Executing query (388 chars): 
+        SELECT a.permno, a.date, a.ret, a.retx, a.prc, a.vol, a.shrout, a.cfacpr, a.cfacshr, b.siccd, b.exchcd, b.shrcd...
+2026-05-25 19:41:33.354 | INFO     | src.utils.wrds_connection:query:164 | Query returned 0 rows, 12 columns.
+2026-05-25 19:41:33.355 | WARNING  | __main__:pull:256 |   2026: no data returned, skipping
+2026-05-25 19:41:33.355 | INFO     | src.utils.wrds_connection:close:122 | WRDS connection closed.
+2026-05-25 19:41:39.045 | SUCCESS  | __main__:pull:283 | CRSP pull complete: 43,717,077 total rows
+2026-05-25 19:41:39.986 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-25 19:41:39.986 | INFO     | __main__:pull:258 | Pulling Compustat data for 1990–2026
+2026-05-25 19:41:39.987 | INFO     | src.utils.wrds_connection:__init__:65 | WRDSConnection created for user 'georgelord'
+2026-05-25 19:41:39.987 | INFO     | src.utils.wrds_connection:get_connection:256 | Singleton WRDSConnection initialised.
+2026-05-25 19:41:39.987 | INFO     | __main__:pull:267 |   1990: loading from cache
+2026-05-25 19:41:40.012 | INFO     | __main__:pull:267 |   1991: loading from cache
+2026-05-25 19:41:40.022 | INFO     | __main__:pull:267 |   1992: loading from cache
+2026-05-25 19:41:40.031 | INFO     | __main__:pull:267 |   1993: loading from cache
+2026-05-25 19:41:40.041 | INFO     | __main__:pull:267 |   1994: loading from cache
+2026-05-25 19:41:40.053 | INFO     | __main__:pull:267 |   1995: loading from cache
+2026-05-25 19:41:40.063 | INFO     | __main__:pull:267 |   1996: loading from cache
+2026-05-25 19:41:40.074 | INFO     | __main__:pull:267 |   1997: loading from cache
+2026-05-25 19:41:40.086 | INFO     | __main__:pull:267 |   1998: loading from cache
+2026-05-25 19:41:40.095 | INFO     | __main__:pull:267 |   1999: loading from cache
+2026-05-25 19:41:40.105 | INFO     | __main__:pull:267 |   2000: loading from cache
+2026-05-25 19:41:40.115 | INFO     | __main__:pull:267 |   2001: loading from cache
+2026-05-25 19:41:40.127 | INFO     | __main__:pull:267 |   2002: loading from cache
+2026-05-25 19:41:40.137 | INFO     | __main__:pull:267 |   2003: loading from cache
+2026-05-25 19:41:40.146 | INFO     | __main__:pull:267 |   2004: loading from cache
+2026-05-25 19:41:40.157 | INFO     | __main__:pull:267 |   2005: loading from cache
+2026-05-25 19:41:40.166 | INFO     | __main__:pull:267 |   2006: loading from cache
+2026-05-25 19:41:40.177 | INFO     | __main__:pull:267 |   2007: loading from cache
+2026-05-25 19:41:40.191 | INFO     | __main__:pull:267 |   2008: loading from cache
+2026-05-25 19:41:40.201 | INFO     | __main__:pull:267 |   2009: loading from cache
+2026-05-25 19:41:40.209 | INFO     | __main__:pull:267 |   2010: loading from cache
+2026-05-25 19:41:40.219 | INFO     | __main__:pull:267 |   2011: loading from cache
+2026-05-25 19:41:40.229 | INFO     | __main__:pull:267 |   2012: loading from cache
+2026-05-25 19:41:40.239 | INFO     | __main__:pull:267 |   2013: loading from cache
+2026-05-25 19:41:40.248 | INFO     | __main__:pull:267 |   2014: loading from cache
+2026-05-25 19:41:40.256 | INFO     | __main__:pull:267 |   2015: loading from cache
+2026-05-25 19:41:40.267 | INFO     | __main__:pull:267 |   2016: loading from cache
+2026-05-25 19:41:40.275 | INFO     | __main__:pull:267 |   2017: loading from cache
+2026-05-25 19:41:40.286 | INFO     | __main__:pull:267 |   2018: loading from cache
+2026-05-25 19:41:40.295 | INFO     | __main__:pull:267 |   2019: loading from cache
+2026-05-25 19:41:40.307 | INFO     | __main__:pull:267 |   2020: loading from cache
+2026-05-25 19:41:40.315 | INFO     | __main__:pull:267 |   2021: loading from cache
+2026-05-25 19:41:40.327 | INFO     | __main__:pull:267 |   2022: loading from cache
+2026-05-25 19:41:40.336 | INFO     | __main__:pull:267 |   2023: loading from cache
+2026-05-25 19:41:40.345 | INFO     | __main__:pull:267 |   2024: loading from cache
+2026-05-25 19:41:40.355 | INFO     | __main__:pull:267 |   2025: loading from cache
+2026-05-25 19:41:40.365 | INFO     | __main__:pull:267 |   2026: loading from cache
+2026-05-25 19:41:40.463 | SUCCESS  | __main__:pull:302 | Compustat pull complete: 331,403 total rows
+2026-05-25 19:41:41.015 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-25 19:41:41.015 | INFO     | __main__:pull:258 | Loading cached linking table from C:\Users\George\Documents\GitHub\FINM-33200-Final-Project\src\data\linking\ccm_link.parquet
+2026-05-25 19:41:41.555 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=DEBUG, file=logs)
+2026-05-25 19:41:41.555 | INFO     | __main__:pull:159 | Loading cached factor data from C:\Users\George\Documents\GitHub\FINM-33200-Final-Project\src\data\riskfree\ff_factors_daily.parquet
+2026-05-25 19:41:42.197 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=INFO, file=logs)
+2026-05-25 19:41:42.197 | INFO     | __main__:pull:208 | Connecting to WRDS ...
+2026-05-25 19:41:42.198 | INFO     | src.utils.wrds_connection:__init__:65 | WRDSConnection created for user 'georgelord'
+2026-05-25 19:41:42.198 | INFO     | src.utils.wrds_connection:get_connection:256 | Singleton WRDSConnection initialised.
+2026-05-25 19:41:42.198 | INFO     | src.utils.wrds_connection:_connect:71 | Connecting to WRDS as 'georgelord' ...
+2026-05-25 19:41:43.391 | INFO     | src.utils.wrds_connection:_connect:86 | WRDS connection established.
+2026-05-25 19:41:43.392 | INFO     | __main__:_pull_ff3:80 | Pulling ff.factors_daily (3-factor) ...
+2026-05-25 19:41:43.572 | INFO     | __main__:_pull_ff3:88 |   -> 8817 rows
+2026-05-25 19:41:43.572 | INFO     | __main__:_pull_momentum:94 | Pulling ff.factors_daily_mom (momentum) ...
+2026-05-25 19:41:43.595 | WARNING  | __main__:_pull_momentum:115 | ff.factors_daily_mom not available; trying ff.factors_daily for umd
+2026-05-25 19:41:43.655 | INFO     | __main__:_pull_momentum:119 |   -> 8817 rows (umd from ff.factors_daily)
+2026-05-25 19:41:43.655 | INFO     | __main__:_pull_ff5:129 | Attempting ff.factors5_daily (5-factor) ...
+2026-05-25 19:41:43.679 | WARNING  | __main__:_pull_ff5:142 | ff.factors5_daily not available ((psycopg2.errors.UndefinedTable) relation "ff.factors5_daily" does not exist
+LINE 3:             FROM ff.factors5_daily
+                         ^
+
+[SQL: 
+            SELECT date, smb, hml, rmw, cma, mktrf, rf
+            FROM ff.factors5_daily
+            WHERE date BETWEEN '1990-01-01' AND '2024-12-31'
+            ORDER BY date
+        ]
+(Background on this error at: https://sqlalche.me/e/20/f405)); skipping RMW/CMA
+2026-05-25 19:41:43.679 | INFO     | __main__:pull:222 | WRDS queries complete.
+2026-05-25 19:41:43.679 | INFO     | __main__:pull:225 | Merging factor datasets ...
+2026-05-25 19:41:43.686 | INFO     | __main__:pull:238 | Validating schema on sample rows ...
+2026-05-25 19:41:43.701 | INFO     | __main__:pull:246 | Wrote 8817 rows to C:\Users\George\Documents\GitHub\FINM-33200-Final-Project\src\data\factors\factors_daily.parquet
+2026-05-25 19:41:44.385 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=INFO, file=logs)
+2026-05-25 19:41:44.385 | INFO     | __main__:pull:248 | Connecting to WRDS ...
+2026-05-25 19:41:44.387 | INFO     | src.utils.wrds_connection:__init__:65 | WRDSConnection created for user 'georgelord'
+2026-05-25 19:41:44.387 | INFO     | src.utils.wrds_connection:get_connection:256 | Singleton WRDSConnection initialised.
+2026-05-25 19:41:44.387 | INFO     | src.utils.wrds_connection:_connect:71 | Connecting to WRDS as 'georgelord' ...
+2026-05-25 19:41:45.603 | INFO     | src.utils.wrds_connection:_connect:86 | WRDS connection established.
+2026-05-25 19:41:45.605 | INFO     | __main__:_try_pull_fred:111 | Trying wrdsapps.fred_data ...
+2026-05-25 19:41:45.630 | DEBUG    | __main__:_try_pull_fred:124 |   wrdsapps.fred_data failed: (psycopg2.errors.UndefinedTable) relation "wrdsapps.fred_data" does not exist
+LINE 3:                 FROM wrdsapps.fred_data
+                             ^
+
+[SQL: 
+                SELECT date, series_id, value
+                FROM wrdsapps.fred_data
+                WHERE series_id IN ('FEDFUNDS', 'GS10', 'TB3MS', 'CPIAUCSL', 'UNRATE', 'INDPRO', 'VIXCLS')
+                  AND date BETWEEN '1990-01-01' AND '2024-12-31'
+                ORDER BY date
+            ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-25 19:41:45.630 | INFO     | __main__:_try_pull_fred:111 | Trying wrdsapps.fredmd ...
+2026-05-25 19:41:45.652 | DEBUG    | __main__:_try_pull_fred:124 |   wrdsapps.fredmd failed: (psycopg2.errors.UndefinedTable) relation "wrdsapps.fredmd" does not exist
+LINE 3:                 FROM wrdsapps.fredmd
+                             ^
+
+[SQL: 
+                SELECT date, series_id, value
+                FROM wrdsapps.fredmd
+                WHERE series_id IN ('FEDFUNDS', 'GS10', 'TB3MS', 'CPIAUCSL', 'UNRATE', 'INDPRO', 'VIXCLS')
+                  AND date BETWEEN '1990-01-01' AND '2024-12-31'
+                ORDER BY date
+            ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-25 19:41:45.652 | INFO     | __main__:_try_pull_fred:111 | Trying wrdsapps.fred_series ...
+2026-05-25 19:41:45.675 | DEBUG    | __main__:_try_pull_fred:124 |   wrdsapps.fred_series failed: (psycopg2.errors.UndefinedTable) relation "wrdsapps.fred_series" does not exist
+LINE 3:                 FROM wrdsapps.fred_series
+                             ^
+
+[SQL: 
+                SELECT date, series_id, value
+                FROM wrdsapps.fred_series
+                WHERE series_id IN ('FEDFUNDS', 'GS10', 'TB3MS', 'CPIAUCSL', 'UNRATE', 'INDPRO', 'VIXCLS')
+                  AND date BETWEEN '1990-01-01' AND '2024-12-31'
+                ORDER BY date
+            ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-25 19:41:45.675 | INFO     | __main__:pull:253 | WRDS queries complete.
+2026-05-25 19:41:45.675 | WARNING  | __main__:pull:256 | WRDS FRED mirror not available; trying FRED API fallback ...
+2026-05-25 19:41:45.675 | WARNING  | __main__:_try_pull_fred_api:150 | pandas_datareader not installed; cannot use FRED API fallback
+2026-05-25 19:41:45.675 | WARNING  | __main__:pull:260 | No FRED data from any source. Writing empty placeholder parquet with correct schema.
+2026-05-25 19:41:45.681 | INFO     | __main__:pull:278 | Wrote 0 rows to C:\Users\George\Documents\GitHub\FINM-33200-Final-Project\src\data\macro\macro_daily.parquet
+2026-05-25 19:47:48.492 | INFO     | logging_utils:setup_logger:105 | Logger initialised (stderr=INFO, file=logs)
+2026-05-25 19:47:48.498 | INFO     | __main__:build_panel:351 | Loading CRSP data ...
+2026-05-25 19:47:49.092 | INFO     | __main__:_load_parquets:207 | Loaded 43717077 rows from 35 partitioned parquet files in CRSP
+2026-05-25 19:47:49.605 | INFO     | __main__:build_panel:356 | Loading risk-free rate data ...
+2026-05-25 19:47:49.607 | INFO     | __main__:_load_parquets:201 | Loaded 9128 rows from Risk-free (1 files)
+2026-05-25 19:47:49.610 | INFO     | __main__:build_panel:360 | Loading engineered features ...
+2026-05-25 19:47:55.893 | INFO     | __main__:_load_feature_files:301 | Loaded feature file cross_sectional_features.parquet: 43717077 rows, 5 columns
+2026-05-25 19:48:17.522 | INFO     | __main__:_load_feature_files:301 | Loaded feature file fundamental_features.parquet: 43814267 rows, 8 columns
+2026-05-25 19:48:39.607 | INFO     | __main__:_load_feature_files:301 | Loaded feature file liquidity_features.parquet: 43717077 rows, 6 columns
+2026-05-25 19:48:39.668 | WARNING  | __main__:_load_feature_files:266 | Skipping empty feature file macro_features.parquet
+2026-05-25 19:49:03.673 | INFO     | __main__:_load_feature_files:301 | Loaded feature file momentum_features.parquet: 43717077 rows, 8 columns
+2026-05-25 19:49:30.323 | INFO     | __main__:_load_feature_files:301 | Loaded feature file return_features.parquet: 43717077 rows, 9 columns
+2026-05-25 19:49:57.084 | INFO     | __main__:_load_feature_files:301 | Loaded feature file volatility_features.parquet: 43717077 rows, 6 columns
+2026-05-25 19:49:57.085 | INFO     | __main__:_load_feature_files:309 | Merged engineered features: 43814267 rows, 32 columns
+2026-05-25 19:50:19.503 | INFO     | __main__:build_panel:384 | Removed 2337742 penny-stock rows (price < 1.0)
+2026-05-25 19:50:21.715 | INFO     | __main__:build_panel:395 | Panel after CRSP + RF merge: 41379335 rows
+2026-05-25 19:51:15.401 | INFO     | __main__:build_panel:421 | Panel after feature merge: 41379335 rows
+2026-05-25 19:51:15.409 | INFO     | __main__:build_panel:433 | Forward-filling 4 fundamental columns (max gap=126)
+2026-05-25 19:51:32.799 | INFO     | __main__:build_panel:445 | Created target_ret via shift(-1); 19265 NaN targets
+2026-05-25 19:51:35.502 | INFO     | __main__:build_panel:465 | Leakage assertion passed: target_ret is forward-looking
+2026-05-25 19:51:35.502 | INFO     | __main__:build_panel:470 | Feature columns treated as backward-looking (30 cols): ['market_relative_ret', 'ret_rank', 'ret_zscore', 'book_to_market', 'roe', 'roa', 'gross_profitability', 'leverage', 'asset_growth', 'turnover']
+2026-05-25 19:51:40.737 | INFO     | __main__:build_panel:481 | Dropped 19265 rows with NaN target_ret
+2026-05-25 19:52:19.631 | INFO     | __main__:build_panel:498 | --- Panel Summary ---
+2026-05-25 19:52:19.641 | INFO     | __main__:build_panel:499 | Shape: (41360070, 52)
+2026-05-25 19:52:20.087 | INFO     | __main__:build_panel:500 | Date range: 1990-01-02 to 2024-12-30
+2026-05-25 19:52:20.261 | INFO     | __main__:build_panel:505 | Unique permnos: 18339
+2026-05-25 19:52:20.426 | INFO     | __main__:build_panel:506 | Unique dates: 8816
+2026-05-25 19:52:21.465 | INFO     | __main__:build_panel:508 | Sector distribution:
+sector
+Manufacturing                 14814900
+Finance                        8072517
+Services                       6616983
+Transportation & Utilities     3115771
+Other                          2628299
+Retail Trade                   2461193
+Mining                         1539671
+Wholesale Trade                1535804
+Construction                    449738
+Agriculture                     102934
+Public Administration            22260
+2026-05-25 19:52:22.425 | INFO     | __main__:build_panel:509 | Target ret stats:
+count    4.136007e+07
+mean     9.799509e-04
+std      4.333776e-02
+min     -9.543060e-01
+25%     -1.449300e-02
+50%      0.000000e+00
+75%      1.408500e-02
+max      3.000000e+00
+2026-05-25 19:52:26.597 | INFO     | __main__:build_panel:513 | Missing values per column (top 20):
+gross_profitability    41360070
+roa                    41251982
+leverage               41251849
+asset_growth           32727230
+roe                    27929907
+amihud_21               8197431
+mom_12_1                4874150
+book_to_market          4545447
+beta_252                4537353
+mom_12m                 4537353
+mom_6m                  2330477
+cum_ret_63              1180916
+downside_vol_63         1180916
+mom_3m                  1180916
+rvol_63                 1180916
+volume_zscore_63        1119652
+cum_ret_21               404341
+rvol_21                  404341
+mom_1m                   404341
+ret_lag_21               387017
+2026-05-25 19:53:13.769 | INFO     | __main__:build_panel:536 | Saved panel dataset to C:\Users\George\Documents\GitHub\FINM-33200-Final-Project\src\data\datasets\panel.parquet (35 year partitions)
+2026-05-25 19:53:14.085 | INFO     | __main__:<module>:561 | Done. Final panel shape: (41360070, 51)

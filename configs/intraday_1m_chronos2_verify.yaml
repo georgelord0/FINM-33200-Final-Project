@@ -1,0 +1,22 @@
+# chronos-2 intraday sanity: n_obs should match the baselines now
+data:
+  source: yfinance_intraday
+  interval: "1m"
+  start: "2026-05-18"
+  end: "2026-05-23"
+  tickers: [AAPL, MSFT, GOOGL, AMZN, NVDA, META, JPM, V, JNJ, WMT]
+  cache_dir: ./data_cache
+  covariates:
+    lags: [1, 5, 60]
+    vol_window: 60
+    mom_long: 390
+    mom_short: 60
+    log_vol_z_window: 390
+
+models: [zero, ridge, chronos-2-60]
+
+horizon: 1
+oos_start: "2026-05-22 09:30"
+oos_end:   "2026-05-22 16:00"
+bars_per_year: 98280
+output_dir: ./results/intraday_1m_chronos2_verify

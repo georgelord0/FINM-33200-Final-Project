@@ -70,7 +70,10 @@ def portfolio_stats(ls: pd.Series, bars_per_year: int = TRADING_DAYS) -> dict[st
                 ["ann_return", "ann_vol", "sharpe", "max_dd", "max_dd_1d"]}
     mu = ls.mean()
     sd = ls.std(ddof=1)
-    equity = (1 + ls).cumprod()
+    # clamp at -0.99 for the cumprod only — a bar <= -1 makes equity go
+    # negative and drawdown nonsense. raw ls still feeds sharpe.
+    ls_equity = ls.clip(lower=-0.99)
+    equity = (1 + ls_equity).cumprod()
     drawdown = equity / equity.cummax() - 1
     return {
         "ann_return": mu * bars_per_year,

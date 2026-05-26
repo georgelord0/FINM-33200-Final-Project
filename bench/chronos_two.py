@@ -8,6 +8,7 @@ setup used in this project.
 
 from __future__ import annotations
 
+import numpy as np
 import pandas as pd
 
 from .protocols import Panel
@@ -56,8 +57,12 @@ class ChronosTwo:
                     cov_a = cov_lookup.xs(asset, level="asset_id").reindex(window_dates)
                 except KeyError:
                     continue
-                if cov_a.isna().any().any():
-                    continue
+                # ffill + 0-fill instead of skipping. minute-frequency thin
+                # bars made the prior skip drop ~half the intraday universe.
+                cov_a = (
+                    cov_a.replace([np.inf, -np.inf], np.nan)
+                          .ffill().fillna(0.0)
+                )
                 entry["past_covariates"] = {
                     name: self._torch.tensor(cov_a[name].to_numpy(), dtype=self._torch.float32)
                     for name in cov_a.columns

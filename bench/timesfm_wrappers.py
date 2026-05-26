@@ -11,10 +11,17 @@ from the last known as-of value because same-day features are known after close.
 
 from __future__ import annotations
 
+import re
+
 import numpy as np
 import pandas as pd
 
 from .protocols import Panel
+
+# sanity clamp on xreg output — saw forecasts of ±1 on intraday before
+_XREG_FORECAST_CLAMP = 0.20
+
+_RET_LAG_RE = re.compile(r"^ret_lag(\d+)$")
 
 
 class TimesFM:
@@ -86,11 +93,14 @@ class TimesFM:
                 continue
             cov_a = cov_a.replace([np.inf, -np.inf], np.nan).ffill().fillna(0.0)
 
-            inputs.append(target.to_numpy(dtype=float))
+            target_arr = target.to_numpy(dtype=float)
+            inputs.append(target_arr)
             assets.append(asset)
             for name in covariates:
                 hist = cov_a[name].to_numpy(dtype=float)
-                covariates[name].append(np.concatenate([hist, np.repeat(hist[-1], horizon)]))
+                covariates[name].append(
+                    np.concatenate([hist, _future_covariate(name, hist, target_arr, horizon)])
+                )
 
         if not inputs:
             return _nan_forecast(panel)
@@ -102,7 +112,10 @@ class TimesFM:
             static_categorical_covariates={},
             xreg_mode=self._xreg_mode,
         )
-        out = pd.Series(np.asarray(point)[:, horizon - 1], index=assets, dtype=float)
+        raw = np.asarray(point)[:, horizon - 1]
+        out = pd.Series(raw, index=assets, dtype=float).clip(
+            -_XREG_FORECAST_CLAMP, _XREG_FORECAST_CLAMP
+        )
         return out.reindex(panel.assets())
 
     def _ensure_model(self, max_horizon: int) -> None:
@@ -147,6 +160,29 @@ class TimesFM:
             )
         )
         self._model = model
+
+
+def _future_covariate(name: str, hist: np.ndarray, target: np.ndarray, horizon: int) -> np.ndarray:
+    """Future values for an xreg covariate over the horizon.
+
+    For ret_lag<N> the future is deterministic from the target history:
+    ret_lag<N>[t+h] = target[t+h-N] when h <= N. Old code carried forward
+    hist[-1] for every column, which made ret_lag1[t+1] = yesterday's return
+    when it should be today's. Slow features (vol, momentum) still carry
+    forward.
+    """
+    m = _RET_LAG_RE.match(name)
+    if m is None:
+        return np.repeat(hist[-1], horizon)
+    n_lag = int(m.group(1))
+    future = []
+    for h in range(1, horizon + 1):
+        idx = h - n_lag
+        if idx <= 0 and abs(idx) < len(target):
+            future.append(target[idx - 1])
+        else:
+            future.append(hist[-1])
+    return np.asarray(future, dtype=float)
 
 
 def _nan_forecast(panel: Panel) -> pd.Series:

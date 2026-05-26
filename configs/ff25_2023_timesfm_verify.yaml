@@ -1,0 +1,12 @@
+# timesfm-xreg sanity on ff25: forecasts should be in the normal range and
+# r2 in line with the other tsfms, not the -1.33 wrds_daily catastrophe
+data:
+  source: ff25
+  start: "2000-01-01"
+  end: "2023-12-31"
+  cache_dir: ./data_cache
+
+models: [zero, ridge, timesfm-2.5-21, timesfm-2.5-xreg-21]
+oos_year: 2023
+horizon: 1
+output_dir: ./results/ff25_2023_timesfm_verify
